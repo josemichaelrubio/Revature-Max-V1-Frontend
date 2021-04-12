@@ -1,0 +1,13 @@
+#basicExampleNav {
+    width: 60%;
+    display: flex;
+    justify-content:space-between;
+    width: 20rem;
+    overflow: auto;
+    white-space: nowrap;
+    margin: 0px auto;
+}
+
+.navbar-brand{
+    margin-left: 75px;
+}
