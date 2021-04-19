@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { AssociatesRoutingModule } from './associates-routing.module';
 import { AssociatesComponent } from './associates.component';
+import { SidenavModule } from '../sidenav/sidenav.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { AssociatesComponent } from './associates.component';
   ],
   imports: [
     CommonModule,
-    AssociatesRoutingModule
+    AssociatesRoutingModule,
+    SidenavModule
   ]
 })
 export class AssociatesModule { }
