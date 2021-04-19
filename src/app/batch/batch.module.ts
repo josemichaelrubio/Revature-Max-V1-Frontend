@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { BatchRoutingModule } from './batch-routing.module';
 import { BatchComponent } from './batch.component';
+import { SidenavModule } from '../sidenav/sidenav.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { BatchComponent } from './batch.component';
   ],
   imports: [
     CommonModule,
-    BatchRoutingModule
+    BatchRoutingModule,
+    SidenavModule
   ]
 })
 export class BatchModule { }

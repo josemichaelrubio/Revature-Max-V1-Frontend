@@ -11,7 +11,6 @@ export class TrainersComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
   showCalendar = false;
 
   showBatch = false;
@@ -32,4 +31,5 @@ export class TrainersComponent implements OnInit {
   closeSideBar(){
     this.tabOpened=false;
   }
+
 }
