@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { TrainersRoutingModule } from './trainers-routing.module';
 import { TrainersComponent } from './trainers.component';
 import { InfoComponent } from './components/info/info.component';
@@ -10,6 +9,7 @@ import { ReferencesComponent } from './components/references/references.componen
 import { RepoLinksComponent } from './components/repo-links/repo-links.component';
 import { InviteComponent } from './components/invite/invite.component';
 import { SidenavModule } from '../sidenav/sidenav.module';
+import { LandingComponent } from './components/landing/landing.component';
 
 
 @NgModule({
@@ -20,7 +20,8 @@ import { SidenavModule } from '../sidenav/sidenav.module';
     BatchDataComponent,
     ReferencesComponent,
     RepoLinksComponent,
-    InviteComponent
+    InviteComponent,
+    LandingComponent
     
 
   ],
