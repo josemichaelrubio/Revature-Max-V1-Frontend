@@ -8,13 +8,13 @@ import { environment } from 'src/environments/environment';
 })
 export class AuthService {
 
-  loginUrl: string = environment.baseUrl+"login";
+loginUrl: string = environment.baseUrl+"/login";
 
-  constructor(private http: HttpClient) {
-  }
+constructor(private http: HttpClient) {
+}
 
-  attemptLogin(username: string,password: string):Observable<any>{
-    const payload = `username=${username}&password=${password}` //
-    return this.http.post(this.loginUrl, payload, {observe:"response"}); //form parameters
- }
+attemptLogin(email: string,password: string):Observable<any>{
+const payload = `email=${email}&password=${password}` //
+return this.http.post(this.loginUrl, payload, {observe:"response"}); //form parameters
+}
 }

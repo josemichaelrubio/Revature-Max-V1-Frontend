@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  username: string = "";
+  email: string = "";
   password: string = "";
   message: string = "";
 
@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
 
   login(){
 
-    this.authService.attemptLogin(this.username,this.password).subscribe(
+    this.authService.attemptLogin(this.email,this.password).subscribe(
       //if successful
       (res)=>{
         this.message = "Successful login";
@@ -37,5 +37,8 @@ export class LoginComponent implements OnInit {
     (res)=>{this.message = res.error.title;
     })
   }
+
+
+  // login = auth.login.component.ts
 
 }

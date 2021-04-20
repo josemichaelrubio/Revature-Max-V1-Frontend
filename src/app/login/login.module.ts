@@ -1,3 +1,4 @@
+import { AuthService } from './../services/auth.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
@@ -17,6 +18,7 @@ import { LoginComponent } from './login.component';
     LoginRoutingModule,
     HttpClientModule, //For HTTP requests
     FormsModule //for Double Binding
-  ]
+  ],
+  providers: [AuthService],
 })
 export class LoginModule { }
