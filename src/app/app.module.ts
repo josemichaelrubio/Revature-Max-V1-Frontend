@@ -13,11 +13,12 @@ import { NavComponent } from './components/nav/nav.component';
     HomeComponent,
     FooterComponent,
     NavComponent,
-    
+
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
