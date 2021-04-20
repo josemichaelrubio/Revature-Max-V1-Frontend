@@ -3,7 +3,7 @@
     <div class="container">
   
       <!-- Navbar brand -->
-      <a class="navbar-brand" href="https://revature.com" target="_blank">Revature</a>
+      <a class="navbar-brand" routerLink="/home"><img src='https://cdn.discordapp.com/attachments/829497330021302322/834067085109231626/revature-max-logo-removebg-preview.png' alt="Revature" style="height: 60px; width: 120px;"></a>
   
       <!-- Collapse button -->
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
@@ -16,9 +16,6 @@
         <div style="float: left;">
             <!-- Links -->
             <ul class="navbar-nav mr-auto smooth-scroll" style="float: left;">
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/home">Home</a>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/associate" *ngIf="isLoggedIn && !isTrainer">Associate</a>
                 </li>

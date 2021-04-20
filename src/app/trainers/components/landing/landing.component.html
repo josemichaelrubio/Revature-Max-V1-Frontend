@@ -21,8 +21,13 @@
                     <!-- Description -->
                     <h4 class="my-4" style="color:white;">Trainer Dashboard</h4>
                     <br>
-                    <a type="button" class="btn btn-outline-light" href="http://localhost:4200/trainers#dashboard" routerLink='info'>Open Dashboard</a>
+                    <a type="button" class="btn btn-outline-light" (click)='openDash()' *ngIf='!dashOpened' style="color:white;">Open Dashboard</a>
                     <br><br>
+                    <div class="btn-group" role="group">
+                      <a type="button" class="btn btn-outline-light" routerLink='batch-data' *ngIf='dashOpened' style="color:white;">Batch Averages</a>
+                      <a type="button" class="btn btn-outline-light" routerLink='info' *ngIf='dashOpened' style="color:white;">Trainer Information</a>
+                      <a type="button" class="btn btn-outline-light" routerLink='info' *ngIf='dashOpened' style="color:white;">Batch Associates</a>
+                    </div>
         
                   </div>
         

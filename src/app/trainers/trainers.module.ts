@@ -10,6 +10,7 @@ import { RepoLinksComponent } from './components/repo-links/repo-links.component
 import { InviteComponent } from './components/invite/invite.component';
 import { SidenavModule } from '../sidenav/sidenav.module';
 import { LandingComponent } from './components/landing/landing.component';
+import { ChartsModule } from 'ng2-charts';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { LandingComponent } from './components/landing/landing.component';
   imports: [
     CommonModule,
     TrainersRoutingModule,
-    SidenavModule
+    SidenavModule,
+    ChartsModule
   ]
 })
 export class TrainersModule { }

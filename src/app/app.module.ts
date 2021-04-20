@@ -7,6 +7,7 @@ import { HomeComponent } from './components/home/home.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { NavComponent } from './components/nav/nav.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,

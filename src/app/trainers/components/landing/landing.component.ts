@@ -12,4 +12,10 @@ export class LandingComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  dashOpened: boolean = false;
+
+  openDash(){
+    this.dashOpened = true;
+  }
+
 }
