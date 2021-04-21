@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
+import { AveragesComponent } from './batch/averages/averages.component';
 
 const routes: Routes = [
   { path: "", redirectTo: '/home', pathMatch: 'full' },
@@ -10,11 +11,13 @@ const routes: Routes = [
   { path: 'batch', loadChildren: () => import('./batch/batch.module').then(m => m.BatchModule) },
   { path: 'login', loadChildren: () => import('./login/login.module').then(m => m.LoginModule) },
   { path: 'topics', loadChildren: () => import('./topics/topics.module').then(m => m.TopicsModule) },
-  { path: 'sidenav', loadChildren: () => import('./sidenav/sidenav.module').then(m => m.SidenavModule) }
+  { path: 'sidenav', loadChildren: () => import('./sidenav/sidenav.module').then(m => m.SidenavModule) },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes,
+    {enableTracing: true}
+    )],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

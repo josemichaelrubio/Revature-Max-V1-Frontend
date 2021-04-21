@@ -1,0 +1,21 @@
+html,
+body,
+header,
+#intro {
+	height: 100%;
+}
+
+#intro {
+	background: url("https://cdn.wallpapersafari.com/43/99/IeVDtW.jpg")no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+
+}
+
+.card {
+	margin-top: 50px;
+	width: 60rem;
+	height: 20rem;
+}
