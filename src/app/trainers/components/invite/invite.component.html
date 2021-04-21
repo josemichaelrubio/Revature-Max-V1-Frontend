@@ -1,1 +1,61 @@
-<p>invite works!</p>
+<div class='container text-center' style='color: red;'>{{errorMessage}}</div>
+<section id="wrapper" class="text-center">
+    <br>
+    <table class="table table-hover table-striped">
+        <caption>Associates In Your Batch</caption>
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Email</th>
+                <th scope="col">Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- <tr *ngFor="let employee of associates">
+                <td>{{employee.id}}</td>
+                <td>{{employee.email}}</td>
+                <td>{{employee.name}}</td>
+            </tr> -->
+            <tr>
+                <td>1</td>
+                <td>andrew.shields@revature.net</td>
+                <td>Andrew Shields</td>
+            </tr>
+        </tbody>
+        
+
+    </table>
+</section>
+    <br>
+    <div class="container justify-content-center text-center">
+      <a type="button" class="btn btn-outline-light btn-lg" (click)='openAssignment()' style="color:white;">Add Associates</a>  
+    </div>
+    
+    <br>
+<section id='wrapper' class="text-center">
+    <table class="table table-hover table-striped" *ngIf='editorOpened'>
+        <caption>Associates not in a Batch</caption>
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Email</th>
+                <th scope="col">Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- <tr *ngFor="let employee of associates">
+                <td>{{employee.id}}</td>
+                <td>{{employee.email}}</td>
+                <td>{{employee.name}}</td>
+            </tr> -->
+            <tr>
+                <td>2</td>
+                <td>tucker.richlie@revature.net</td>
+                <td>Marcus Tucker Richlie</td>
+            </tr> 
+        </tbody>
+        
+
+    </table>
+</section>
+
