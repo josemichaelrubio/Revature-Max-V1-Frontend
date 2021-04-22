@@ -34,30 +34,22 @@
     </div>
     
     <br>
-<section id='wrapper' class="text-center">
-    <table class="table table-hover table-striped" *ngIf='editorOpened'>
-        <caption>Associates not in a Batch</caption>
-        <thead>
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Email</th>
-                <th scope="col">Name</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let employee of associates">
-                <td>{{employee.id}}</td>
-                <td>{{employee.email}}</td>
-                <td>{{employee.name}}</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>tucker.richlie@revature.net</td>
-                <td>Marcus Tucker Richlie</td>
-            </tr> 
-        </tbody>
-        
+<section id='wrapper' class="container justify-content-center text-center" *ngIf="editorOpened">
+    <br><br>
+    <form class="form-floating" [formGroup]="formData" (ngSubmit)="onClickAddEmail(formData.value)" >
 
-    </table>
+        <input type="text" class="form-control" id="emailInput" name="email" placeholder="@revature.net" formControlName="email">
+        <label for="emailInput">Associate Email Address</label> 
+        <br>
+        <!-- <input type="submit" class="forsubmit" value="Add to List"> -->
+        <button class="btn btn-lg btn-outline-dark" type="submit">Add to List</button>
+    </form>
+    <br>
+    <ol class="list-group list-group-flush">
+        <li class="list-group-item" *ngFor="let e of emails">{{e}}</li>
+    </ol>
+    <br>
+    <button class="btn btn-lg btn-outline-dark" (click)="onClickSubmit">Submit to Batch</button>
+    <br><br>
 </section>
 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { GroupDataService } from 'app/services/group-data.service';
 import { User } from '../../../models/user';
 
@@ -9,8 +10,13 @@ import { User } from '../../../models/user';
 })
 export class InviteComponent implements OnInit {
   associates: User[] = [];
-  employees: User[] = [];
   errorMessage: string = '';
+  successMessage: string = '';
+
+  emails: string[] = [];
+  email: string = '';
+
+  formData!: FormGroup;
 
   editorOpened: boolean = false;
 
@@ -22,6 +28,20 @@ export class InviteComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.formData = new FormGroup({
+      email: new FormControl("employee@revature.net")
+    });
+  }
+
+  onClickAddEmail(data: any){
+    this.email = data.email;
+    this.emails.push(this.email);
+  }
+
+  onClickSubmit(){
+    this.groupData.addAssociates(this.emails).subscribe((empsReturned)=>this.associates=empsReturned, 
+    ()=>this.errorMessage='Could not add employees to batch', 
+    ()=>this.successMessage = "Employees were added to batch successfully");
   }
 
   openAssignment(){

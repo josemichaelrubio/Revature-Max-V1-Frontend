@@ -8,13 +8,12 @@ import { User } from '../models/user';
 })
 export class GroupDataService {
 
-  associates: User[] = [];
 
   batchId: any = sessionStorage.getItem("userBatchId");
   token: any = sessionStorage.getItem("token");
 
   batchUrl: string = `http://20.185.67.43/batches/${this.batchId}`;
-  batchAssociatesUrl: string = `http://20.185.67.43/batches/1/associates`;
+  batchAssociatesUrl: string = `http://20.185.67.43/batches/${this.batchId}/associates`;
 
   httpOptions = {
     headers: new HttpHeaders({"Authorization": this.token})
@@ -26,7 +25,7 @@ export class GroupDataService {
     return this.http.get<User[]>(this.batchAssociatesUrl)
   }
 
-  addAssociates(associates: User[]): Observable<User[]>{
+  addAssociates(associates: string[]): Observable<User[]>{
     return this.http.post<User[]>(this.batchAssociatesUrl, associates, this.httpOptions);
   }
 

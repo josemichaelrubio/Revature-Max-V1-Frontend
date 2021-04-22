@@ -3,43 +3,91 @@ body {
   }
   
   .sidenav {
-    width: 250px;
+    width: 230px;
     position: fixed;
     z-index: 1;
     top: 170px;
     left: 0px;
-    background: #ffffff;
+    background: white;
     border-radius: 1em;
     overflow-x: hidden;
     padding: 8px 0;
   }
-  
-  .sidenav a {
-    padding: 6px 8px 6px 16px;
-    text-decoration: none;
-    font-size: 40px;
-    color: rgb(16, 2, 95);
-    display: block;
-  }
-  
-  .sidenav a:hover {
-    color: #000000;
-  }
-  
-  .main {
-    margin-left: 140px; /* Same width as the sidebar + left position in px */
-    font-size: 28px; /* Increased text to enable scrolling */
-    padding: 0px 10px;
-  }
-  
+
   @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
   }
 
-  .wordart {
+ul {
+  padding: 0;
+  list-style-type: none;
+}
+
+li {
+  font-size: 25px;
+  width: 9em;
+  height: 2em;
+  color: black;
+  border-radius: 1em;
+  border-left: 0.08em solid;
+  position: relative;
+  margin-top: 0.8em;
+  cursor: pointer;
+}
+
+a {
+  color: black;
+}
+
+li::before,
+li::after
+{
+  content: '';
+  position: absolute;
+  width: inherit;
+  border-left: inherit;
+  z-index: -1;
+}
+
+li::before {
+  height: 80%;
+  top: 10%;
+  left: calc(-0.15em - 0.08em * 2);
+  filter: brightness(0.8);
+}
+
+li::after {
+  height: 60%;
+  top: 20%;
+  left: calc(-0.15em * 2 - 0.08em * 3);
+  filter: brightness(0.6);
+}
+
+li span {
+  position: relative;
+  height: 120%;
+  top: -10%;
+  box-sizing: border-box;
+  border: 0.08em solid;
+  background-color: white;
+  border-radius: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: sans-serif;
+  text-transform: capitalize;
+  transform: translateX(calc(-0.15em * 3 - 0.08em * 2));
+  transition: 0.3s;
+}
+
+li:hover span {
+  transform: translateX(0.15em);
+}
+
+.wordart {
 	font-family: Arial, sans-serif;
-	font-size: 40px;
+	font-size: 30px;
 	font-weight: bold;
 	position: relative;
 	z-index: 1;
