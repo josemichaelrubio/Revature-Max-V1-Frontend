@@ -6,6 +6,7 @@ import { BatchComponent } from './batch.component';
 import { SidenavModule } from '../sidenav/sidenav.module';
 import { AveragesComponent } from './averages/averages.component';
 import { BatchLandingComponent } from './batch-landing/batch-landing.component';
+import { BatchInfoAverages } from '../models/batch-info-averages';
 
 
 @NgModule({
@@ -18,6 +19,6 @@ import { BatchLandingComponent } from './batch-landing/batch-landing.component';
     CommonModule,
     BatchRoutingModule,
     SidenavModule
-  ]
+  ],
 })
 export class BatchModule { }

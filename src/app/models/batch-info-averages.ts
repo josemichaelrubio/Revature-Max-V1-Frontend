@@ -1,19 +1,16 @@
-import { Instructor } from './instructor';
+import { Batch } from './batch';
 import { QuizAvg } from './quiz-avg';
 import { TopicCompAvg } from './topic-comp-avg';
 
+
 export class BatchInfoAverages {
-	description: string;
-	instructor: Instructor;
-	name: string;
+	batch: Batch
 	quizAverage: QuizAvg[];
 	competencyAverage: TopicCompAvg[];
 
-	constructor(batchInfoResponse?: any)
+	constructor(batchInfoResponse: any)
 	{
-        this.description = batchInfoResponse.description;
-        this.instructor = batchInfoResponse.instructor;
-        this.name = batchInfoResponse.name;
+        this.batch = batchInfoResponse.batch;
         this.quizAverage = batchInfoResponse.quizAverage;
         this.competencyAverage = batchInfoResponse.competencyAverage;
     }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map, take } from 'rxjs/operators';
 import { BatchInfoAverages } from '../../models/batch-info-averages';
 import { AverageService } from '../../services/average.service';
 
@@ -10,17 +11,23 @@ import { AverageService } from '../../services/average.service';
 })
 export class AveragesComponent implements OnInit {
 
-	batchInfoAverages: BatchInfoAverages = new BatchInfoAverages();
-
-
+	batchInfoAverages!: BatchInfoAverages;
 
   constructor(private averageService : AverageService) {
-  		averageService.getBatchInfo(1).subscribe(
-  			(infoReturned) => this.batchInfoAverages = infoReturned
+  		//this.batchInfoAverages = batchInfoAverages;
+  		this.averageService.getBatchInfo(1).pipe(take(1)).subscribe(
+  			(response: BatchInfoAverages) => this.batchInfoAverages = response,
+  			(error) => console.log("There is an error"),
+  			() => console.log(this.batchInfoAverages)
   		)
-   }
+
+  		//console.log("checking for value again: " + this.batchInfoAverages.batch.description);
+  }
+
+   
 
   ngOnInit(): void {
+
   }
 
 }
