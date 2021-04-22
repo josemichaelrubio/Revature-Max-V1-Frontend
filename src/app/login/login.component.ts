@@ -1,3 +1,4 @@
+import { LoginResponse } from './../models/login-response';
 import { AuthService } from './../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -10,35 +11,53 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   email: string = "";
-  password: string = "";
+  password: string= "";
   message: string = "";
+  response!: LoginResponse;
 
   constructor(private authService: AuthService, private router: Router) { } //for all of our services, we want to do dependency injection
 
-  ngOnInit(): void {
-  }
+  // login(){
+
+  //   this.authService.attemptLogin(this.email,this.password).subscribe((res)=>{
+  //     console.log("Logged in!");
+  //     sessionStorage.setItem("token",this.response._token)
+  //     this.router.navigateByUrl("home");
+  //   })
+  // }
 
   login(){
 
+
     this.authService.attemptLogin(this.email,this.password).subscribe(
-      //if successful
       (res)=>{
         this.message = "Successful login";
-        console.log("Successful login");
+        this.response = res;
 
-        console.log(res.headers.get("Authorization"));
-        sessionStorage.setItem("token", res.headers.get("Authorization"));
-
-
-        this.router.navigate(['home']);
 
     },
-    //if it's not successful
     (res)=>{this.message = res.error.title;
+    },
+    ()=>{
+
+      sessionStorage.setItem("token",this.response.token);
+      sessionStorage.setItem("user", JSON.stringify(this.response.user));
+
+      if(this.response.userBatchId== null){
+        this.router.navigateByUrl("associates");
+      };
+
+      sessionStorage.setItem("userBatchId", this.response.userBatchId.toString());
+
+      if(this.response.user.role == "INSTRUCTOR"){
+        this.router.navigateByUrl("trainers");
+      }else{
+        this.router.navigateByUrl("batch");
+      }
     })
   }
+  ngOnInit(): void {
+  }
 
-
-  // login = auth.login.component.ts
 
 }

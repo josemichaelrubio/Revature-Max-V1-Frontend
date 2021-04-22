@@ -17,7 +17,9 @@ import { LoginComponent } from './login.component';
     CommonModule,
     LoginRoutingModule,
     HttpClientModule, //For HTTP requests
-    FormsModule //for Double Binding
+    FormsModule, //for Double Binding
+    
+
   ],
   providers: [AuthService],
 })
