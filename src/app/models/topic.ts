@@ -1,5 +1,16 @@
-export interface Topic {
-    id: number;
+import { Tag } from "./tag";
+
+export class Topic {
+
+    id:number;
+    tag: Tag;
     name: string;
-    tag: { id: number, name: string };
+
+    constructor(topic:any){
+        this.id = topic.id;
+        this.tag=topic.tag;
+        this.name= topic.name;
+    }
+
+
 }

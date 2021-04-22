@@ -4,7 +4,7 @@ import { HttpClient, HttpHandler, HttpHeaders } from '@angular/common/http';
 import { Injectable, PLATFORM_INITIALIZER } from '@angular/core';
 import { BehaviorSubject, pipe } from 'rxjs';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../environments/environment';
 import { map, tap } from  'rxjs/operators';
 
 

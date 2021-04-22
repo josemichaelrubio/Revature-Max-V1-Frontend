@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { TopicService } from '../services/topic.service';
-import { Topic } from '../models/topic'
+import { Topic } from '../models/topic';
 import { Notes } from '../models/notes';
 
 @Component({

@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError, retry, map} from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 import { BatchInfoAverages } from '../models/batch-info-averages';
 
 
@@ -10,11 +9,13 @@ import { BatchInfoAverages } from '../models/batch-info-averages';
   providedIn: 'root'
 })
 export class AverageService {
-
-
  
   constructor(private http: HttpClient) {
    }
+
+   httpOptions = {
+    headers: new HttpHeaders({"Authorization": sessionStorage.getItem("token") || ''})
+  };
 
   getBatchInfo(batchId: number): Observable<BatchInfoAverages>{
   	return this.http.get<BatchInfoAverages>(environment.baseUrl+`batches/${batchId}`);

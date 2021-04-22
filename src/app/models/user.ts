@@ -1,14 +1,15 @@
 export class User{
 
+    id:number;
+    email:string;
+    name:string;
+    role:string;
 
-  email:string;
-  name:string;
-  role:string;
-
-  constructor(_id:number, _email:string, _name:string, _role:string, _token:string){
-
-    this.email=_email;
-    this.name=_name;
-    this.role=_role;
-  }
- }
+    constructor(_id:number, _email:string, _name:string, _role:string){
+      this.id=_id;
+      this.email=_email;
+      this.name=_name;
+      this.role=_role;
+    }
+   }
+  
