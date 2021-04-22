@@ -1,1 +1,15 @@
-<p>topics works!</p>
+<div class="container">
+    <h1>{{topic.tag.name}}: {{topic.name}}}</h1>
+    <p>My competency:
+        <input type="number" [(ngModel)]="competency" (ngModelChange)="updateCompetency()"
+        [ngModelOptions]="{updateOn: 'blur'}" />
+    </p>
+    <ul>
+        <li *ngFor="let n of notes">
+            <div [class.starred]="starredNotesId == n.id">
+                <h3>{{n.employee.name}}'s Notes - {{n.timesStarred}} times starred</h3>
+                <div class="input" role="textbox">{{n.contents}}</div>
+            </div>
+        </li>
+    </ul>
+</div>
