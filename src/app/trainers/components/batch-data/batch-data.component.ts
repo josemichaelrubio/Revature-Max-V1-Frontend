@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
+import { BatchInfoAverages } from 'src/app/models/batch-info-averages';
+import { AverageService } from 'src/app/services/average.service';
 
 @Component({
   selector: 'app-batch-data',
@@ -9,7 +11,37 @@ import { Color, Label } from 'ng2-charts';
 })
 export class BatchDataComponent implements OnInit {
 
-  constructor() { }
+  averages!:BatchInfoAverages;
+
+  quizAvgDataSet: number[] = [];
+  quizLabels: string[] = [];
+
+  topicCompAvgDataSet: number[] = [];
+  topicLabels: string[] = [];
+
+  constructor(private averageService:AverageService) {
+    averageService.getAllAverages().subscribe((avg)=>{
+      this.averages=avg;
+      for(let quizAvg of this.averages.quizAverage){
+        this.quizAvgDataSet.push(+quizAvg.average);
+        this.quizLabels.push(quizAvg.quizName);
+      }
+
+      this.quizAvgDataSet.push(50, 100);
+  
+      for(let compAvg of this.averages.competencyAverage){
+        this.topicCompAvgDataSet.push(+compAvg.average);
+        this.topicLabels.push(compAvg.topicName);
+      }
+
+      this.topicCompAvgDataSet.push(0, 5);
+
+    }, 
+      (err)=>console.log(err), 
+      ()=>console.log(this.averages)
+    );
+
+  }
 
   ngOnInit(): void {
   }
@@ -17,11 +49,10 @@ export class BatchDataComponent implements OnInit {
   // Line Chart data for Quiz Averages
 
   lineChartData: ChartDataSets[] = [
-    {data: [92, 45, 78, 86, 77, 70, 30, 100], label: 'Quiz Score Averages', fill: false},
-    {data: [70, 70, 70, 70, 70, 70], label: 'Failing Score', borderColor: 'red', backgroundColor: 'rgba(255, 0, 0, 0.1)', pointBackgroundColor: 'black'}
+    {data: this.quizAvgDataSet, label: 'Quiz Score Averages', fill: false}
   ];
 
-  lineChartLabels: Label[] = ['Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7'];
+  lineChartLabels: Label[] = this.quizLabels;
 
   lineChartOptions: ChartOptions = {responsive: true };
 
@@ -43,14 +74,13 @@ export class BatchDataComponent implements OnInit {
   barChartOptions: ChartOptions = {
     responsive: true,
   };
-  barChartLabels: Label[] = ['Java', 'Azure', 'Angular', 'Spring', 'HTML', 'Microservices'];
+  barChartLabels: Label[] = this.topicLabels;
   barChartType: ChartType = 'bar';
   barChartLegend = true;
   barChartPlugins = [];
 
   barChartData: ChartDataSets[] = [
-    { data: [4.76, 4.2, 3.87, 3.1, 4.1, 0.5, 0], label: 'Topic Competency Averages', backgroundColor: 'rgba(0, 0, 0, 0.8)', hoverBackgroundColor: 'rgba(214, 116, 4, 0.6)', },
-    { data: [5, 3, 4, 2, 4, 1], label: 'My Topic Competency', backgroundColor: 'rgba(255, 0, 0, 0.8)', hoverBackgroundColor: 'rgba(0, 116, 4, 0.6)', }
+    { data: this.topicCompAvgDataSet, label: 'Topic Competency Averages', backgroundColor: 'rgba(0, 0, 0, 0.8)', hoverBackgroundColor: 'rgba(214, 116, 4, 0.6)', }
   ];
 
 }

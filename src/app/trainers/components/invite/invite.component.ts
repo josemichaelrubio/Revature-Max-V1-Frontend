@@ -15,8 +15,10 @@ export class InviteComponent implements OnInit {
   editorOpened: boolean = false;
 
   constructor(private groupData: GroupDataService) {
+
     groupData.getAllAssociates().subscribe((usersReturned)=>this.associates=usersReturned,
-    (err)=>{this.errorMessage = "Could not find any associates for your assigned batch!"})
+    (err)=>{this.errorMessage = "Could not find any associates for your assigned batch!"});
+
    }
 
   ngOnInit(): void {
