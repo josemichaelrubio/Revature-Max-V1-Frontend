@@ -32,13 +32,12 @@ export class AveragesComponent implements OnInit {
   associateQuizScoresDataSet : number[] = [];
 
   constructor(private averageService : AverageService, private associateDataService: AssociateDataService) {
-  		//this.batchInfoAverages = batchInfoAverages;
   		this.averageService.getBatchInfo(this.batchId).pipe(take(1)).subscribe(
   			(response: BatchInfoAverages) => {
           this.batchInfoAverages = response;
           for (let quizAvg of this.batchInfoAverages.quizAverage) {
             this.quizAveragesDataSet.push(quizAvg.averageScore);
-            this.quizLabels.push(quizAvg.quizName);
+            this.quizLabels.push(quizAvg.quizName + " (count: " + quizAvg.scoresCounted + ")");
             this.countForQuiz.push(quizAvg.scoresCounted);
           }
 
@@ -88,7 +87,6 @@ export class AveragesComponent implements OnInit {
   barChartDataQuizzes: ChartDataSets[] = [
     { data: this.quizAveragesDataSet, label: 'Quiz Average for Batch' },
     { data: this.associateQuizScoresDataSet, label: 'Your Score'},
-    { data: this.countForQuiz, label: 'Number of Quizzes Submitted'}
   ];
 
    barChartOptionsTopics: ChartOptions = {
