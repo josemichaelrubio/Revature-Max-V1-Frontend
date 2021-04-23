@@ -8,7 +8,7 @@
         <li *ngFor="let n of notes">
             <div [class.starred]="starredNotesId == n.id">
                 <h3>{{n.employee.name}}'s Notes - {{n.timesStarred}} times starred</h3>
-                <div class="input" role="textbox" [class.disabled]="n.employee.id != userId" >{{n.contents}}</div>
+                <div class="input" role="textbox" [class.disabled]="n.employee.id != userId" >{{n.content}}</div>
             </div>
         </li>
     </ul>
