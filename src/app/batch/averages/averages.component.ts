@@ -57,15 +57,16 @@ export class AveragesComponent implements OnInit {
 
       associateDataService.getEmployeeInfo().pipe(take(1)).subscribe(
            (response: EmployeeInfo) => {
+             console.log(response);
              this.employeeInfo = response;
              for (let empQuiz of this.employeeInfo.quizzes) {
                this.associateQuizScoresDataSet.push(empQuiz.score);
              }
 
              this.associateQuizScoresDataSet.push(0, 100);
-
-
-           }
+           },
+           (error) => console.log("There is an error"),
+           () => console.log(this.employeeInfo)
         )
   }
 
