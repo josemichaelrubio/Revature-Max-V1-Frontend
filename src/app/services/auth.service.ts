@@ -1,11 +1,10 @@
-import { User } from './../models/user';
+import { UserRegistration } from './../models/user-registration';
 import { LoginResponse } from './../models/login-response';
 import { HttpClient, HttpHandler, HttpHeaders } from '@angular/common/http';
 import { Injectable, PLATFORM_INITIALIZER } from '@angular/core';
-import { BehaviorSubject, pipe } from 'rxjs';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { map, tap } from  'rxjs/operators';
+
 
 
 @Injectable({
@@ -14,38 +13,19 @@ import { map, tap } from  'rxjs/operators';
 export class AuthService {
 
 loginUrl: string = environment.baseUrl+"/login";
-authSubject = new BehaviorSubject(false);// tracks the user's authorization state
-token: string | null | undefined;
+registerUrl: string = environment.baseUrl+"employees";
 httpOptions =  { headers : new HttpHeaders({"Content-Type":"application/x-www-form-urlencoded"})};
 
 constructor(private http: HttpClient) {
 }
 
-
-
 attemptLogin(email: string, password: string ):Observable<LoginResponse>{
-// const payload = `email=${email}&password=${password}`
-// return this.http.post(this.loginUrl, payload, {
-//   headers: {
-//     "Content-Type":"application/x-www-form-urlencoded"
-//   },
-//   observe: 'response'
-// }).pipe(map(res=>{
-//     const token = res.headers.get('token');
-//     this.setToken(token);
-//     const user = res.body as LoginResponse;
-//     return user;
-
-
   const payload = `email=${email}&password=${password}`
-  // return this.http.post(`${this.loginUrl}`, payload, this.httpOptions)
-
-// const payload = `email=${email}&password=${password}`
-return this.http.post<LoginResponse>(this.loginUrl,payload, this.httpOptions);//form parameters
-// })).toPromise();
+  return this.http.post<LoginResponse>(this.loginUrl,payload, this.httpOptions);
 }
 
-// setToken(token: string | null | undefined): void {
-//   this.token = token;
-// }
+registerNewEmployee(name: string, email: string, password: string):Observable<UserRegistration>{
+  const payload = `name=${name}&email=${email}&password=${password}`
+  return this.http.post<UserRegistration>(this.registerUrl,payload,this.httpOptions);
+}
 }

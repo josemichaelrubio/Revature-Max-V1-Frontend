@@ -1,11 +1,14 @@
-
-
 <div class="container">
   <img class="mb-4 rev-logo" src="https://revature.com/wp-content/uploads/2017/06/logo-2.png" alt="" width="30%" height="30%">
   <form class="form-signin" id="login-form">
-      <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+      <h1 class="h3 mb-3 font-weight-normal">Please Register an Account</h1>
+
+      <label for="inputName" class="sr-only">Full Name</label>
+      <input type="name" id="inputName" name="name" [(ngModel)]="name" class="form-control" placeholder="Name" required="" autofocus="">
+
       <label for="inputEmail" class="sr-only">Email</label>
       <input type="email" id="inputEmail" name="email" [(ngModel)]="email" class="form-control" placeholder="Email" required="" autofocus="">
+
       <label for="inputPassword" class="sr-only">Password</label>
       <input type="password" id="inputPassword" name="password" [(ngModel)]="password" class="form-control" placeholder="Password" required="">
       <div class="checkbox mb-3">
@@ -13,10 +16,8 @@
           <input type="checkbox" value="remember-me"> Remember me
           </label>
       </div>
-      <button class="btn btn-lg btn-primary btn-block" type="submit" (click)="login()" >Sign in</button> <!--Button Color-->
+      <button class="btn btn-lg btn-primary btn-block" type="submit" (click)="newEmployee()" >Register</button> <!--eventBinding-->
       <div *ngIf="message">{{message}}</div>
-      <!-- <button class="btn btn-lg btn-primary btn-block" type="submit" (click)="registerNewEmployee()" >Register</button>
-      <div *ngIf="message">{{message}}</div> -->
   </form>
 </div>
 
