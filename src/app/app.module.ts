@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { NavComponent } from './components/nav/nav.component';
+import { RegistrationComponent } from './components/registration/registration.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -14,13 +16,15 @@ import { NavComponent } from './components/nav/nav.component';
     AppComponent,
     HomeComponent,
     FooterComponent,
-    NavComponent
+    NavComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
