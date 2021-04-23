@@ -1,6 +1,8 @@
+<main id ="intro">
 <div class="container">
-  <img class="mb-4 rev-logo" src="https://revature.com/wp-content/uploads/2017/06/logo-2.png" alt="" width="30%" height="30%">
+  <img class="mb-4 rev-logo" src="https://3g4d13k75x47q7v53surz1gi-wpengine.netdna-ssl.com/wp-content/themes/revature/imgs/logo-white-color.png" alt="Revautre Logo">
   <form class="form-signin" id="login-form">
+
       <h1 class="h3 mb-3 font-weight-normal">Please Register an Account</h1>
 
       <label for="inputName" class="sr-only">Full Name</label>
@@ -11,13 +13,10 @@
 
       <label for="inputPassword" class="sr-only">Password</label>
       <input type="password" id="inputPassword" name="password" [(ngModel)]="password" class="form-control" placeholder="Password" required="">
-      <div class="checkbox mb-3">
-          <label>
-          <input type="checkbox" value="remember-me"> Remember me
-          </label>
-      </div>
+
       <button class="btn btn-lg btn-primary btn-block" type="submit" (click)="newEmployee()" >Register</button> <!--eventBinding-->
       <div *ngIf="message">{{message}}</div>
   </form>
 </div>
 
+</main>

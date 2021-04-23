@@ -40,6 +40,8 @@ export class RegistrationComponent implements OnInit {
 
   }
 
+
+
   ngOnInit(): void {
   }
 
