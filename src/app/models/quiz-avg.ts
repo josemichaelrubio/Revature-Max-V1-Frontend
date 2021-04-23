@@ -1,12 +1,12 @@
 export class QuizAvg {
 	quizName: string;
-	average: string;
-	count: string;
+	averageScore: number;
+	scoresCounted: number;
 
 	constructor(quizAverage: any){
         this.quizName = quizAverage.quizName;
-        this.average = quizAverage.average;
-        this.count = quizAverage.count;
+        this.averageScore = quizAverage.averageScore;
+        this.scoresCounted = quizAverage.scoresCounted;
     }
 
 }
