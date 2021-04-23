@@ -2,8 +2,8 @@ body {
 	margin:0;
 	padding:0;
 	font-family: Verdana, Geneva, sans-serif;
-}
 
+}
 
 .form-signin {
     padding: 0 30%;
@@ -27,8 +27,22 @@ body {
 
 .container {
     padding: 10rem 0;
+
 }
 
 .our-grey {
-    background-color: #BBB !important;
+    background-color:black;
+}
+
+h1{
+  color: white;
+  text-align: center;
+}
+
+#intro{
+  background-color: #161616;
+}
+
+#remember-me{
+  color:white
 }
