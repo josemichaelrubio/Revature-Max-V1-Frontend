@@ -69,7 +69,8 @@ export class CompetenciesComponent implements OnInit {
               for (let i=0; i < length; i++) {
                 sum += this.tagCompetencies[tagName][i];
               }
-              let average = sum/length;
+              let average = (sum/length).toPrecision(2);
+              console.log(average);
               this.tagCompAvg.push(average);
 
             } 
@@ -109,10 +110,32 @@ export class CompetenciesComponent implements OnInit {
   radarChartLabels: Label[] = this.tagNames;
 
   radarChartData: ChartDataSets[] = [
-    { data: [0, 1, 2], label: 'Employee Skill Analysis' }
+    { data: this.tagCompAvg, label: 'Associate Topic Competency Analysis', backgroundColor: 'rgba(248, 148, 6, 0.2)', borderColor: 'rgba(248, 148, 6, 1)'  }
   ];
+
+  //backgroundColor: 'rgba(248, 148, 6, 1)'
   radarChartType: ChartType = 'radar';
 
 
+    lineChartData: ChartDataSets[] = [
+    { data: [85, 72, 78, 75, 77, 75], label: 'Crude oil prices' },
+  ];
+
+  lineChartLabels: Label[] = ['January', 'February', 'March', 'April', 'May', 'June'];
+
+  lineChartOptions = {
+    responsive: true,
+  };
+
+  lineChartColors: Color[] = [
+    {
+      borderColor: 'black',
+      backgroundColor: 'rgba(255,255,0,0.28)',
+    },
+  ];
+
+  lineChartLegend = true;
+  lineChartPlugins = [];
+  lineChartType = 'line';
 
 }
