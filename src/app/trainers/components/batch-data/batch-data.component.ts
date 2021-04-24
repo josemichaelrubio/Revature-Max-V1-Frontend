@@ -13,7 +13,7 @@ export class BatchDataComponent implements OnInit {
 
   averages!:BatchInfoAverages;
 
-  batchId: number = +(sessionStorage.getItem("userBatchId") || 1);
+  batchId: number =  +(sessionStorage.getItem("userBatchId") || 1);
 
   quizAvgDataSet: number[] = [];
   quizLabels: string[] = [];

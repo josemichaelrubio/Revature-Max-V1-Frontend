@@ -14,11 +14,11 @@ export class AverageService {
    }
 
    httpOptions = {
-    headers: new HttpHeaders({"Authorization": sessionStorage.getItem("token") || ''})
+    headers: new HttpHeaders({"Authorization": sessionStorage.getItem("token") || ""})
   };
 
   getBatchInfo(batchId: number): Observable<BatchInfoAverages>{
-  	return this.http.get<BatchInfoAverages>(environment.baseUrl+`batches/${batchId}`);
+  	return this.http.get<BatchInfoAverages>(environment.baseUrl+`batches/${batchId}`, this.httpOptions);
 
   }
 }

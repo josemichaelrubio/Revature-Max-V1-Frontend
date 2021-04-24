@@ -11,6 +11,16 @@ import { InviteComponent } from './components/invite/invite.component';
 import { SidenavModule } from '../sidenav/sidenav.module';
 import { LandingComponent } from './components/landing/landing.component';
 import { ChartsModule } from 'ng2-charts';
+import { NavGroupComponent } from './components/nav-group/nav-group.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin
+import interactionPlugin from '@fullcalendar/interaction'; // a plugin
+
+FullCalendarModule.registerPlugins([
+  dayGridPlugin,
+  interactionPlugin
+]);
 
 
 @NgModule({
@@ -22,7 +32,8 @@ import { ChartsModule } from 'ng2-charts';
     ReferencesComponent,
     RepoLinksComponent,
     InviteComponent,
-    LandingComponent
+    LandingComponent,
+    NavGroupComponent
     
 
   ],
@@ -30,7 +41,9 @@ import { ChartsModule } from 'ng2-charts';
     CommonModule,
     TrainersRoutingModule,
     SidenavModule,
-    ChartsModule
+    ChartsModule,
+    ReactiveFormsModule,
+    FullCalendarModule
   ]
 })
 export class TrainersModule { }
