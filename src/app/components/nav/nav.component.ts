@@ -1,3 +1,4 @@
+import { LoginResponse } from './../../models/login-response';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavChangeService } from 'app/services/nav-change.service';
@@ -8,7 +9,11 @@ import { NavChangeService } from 'app/services/nav-change.service';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
+
+  repsonse!: LoginResponse;
   isLoggedIn = false;
+  isLoggedOut= false;
+
 
   isTrainer = false;
 

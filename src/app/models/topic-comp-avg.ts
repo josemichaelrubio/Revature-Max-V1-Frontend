@@ -1,12 +1,14 @@
 export class TopicCompAvg {
-	topicName: string;
-	average: string;
-	count: string;
+	id: number;
+	tagName: string;
+	averageCompetency: number;
+	competenciesCounted: number;
 
 	constructor(competencyAverage: any){
-        this.topicName = competencyAverage.topicName;
-        this.average = competencyAverage.average;
-        this.count = competencyAverage.count;
+		this.id = competencyAverage.id;
+        this.tagName = competencyAverage.tagName;
+        this.averageCompetency = competencyAverage.averageCompetency;
+        this.competenciesCounted= competencyAverage.competenciesCounted;
     }
 
 }

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
-import { BatchInfoAverages } from 'app/models/batch-info-averages';
-import { AverageService } from 'app/services/average.service';
+import { BatchInfoAverages } from '../../../models/batch-info-averages';
+import { AverageService } from '../../../services/average.service';
 
 @Component({
   selector: 'app-batch-data',
@@ -25,15 +25,15 @@ export class BatchDataComponent implements OnInit {
     averageService.getBatchInfo(this.batchId).subscribe((avg)=>{
       this.averages=avg;
       for(let quizAvg of this.averages.quizAverage){
-        this.quizAvgDataSet.push(+quizAvg.average);
+        this.quizAvgDataSet.push(quizAvg.averageScore);
         this.quizLabels.push(quizAvg.quizName);
       }
 
       this.quizAvgDataSet.push(50, 100);
   
       for(let compAvg of this.averages.competencyAverage){
-        this.topicCompAvgDataSet.push(+compAvg.average);
-        this.topicLabels.push(compAvg.topicName);
+        this.topicCompAvgDataSet.push(compAvg.averageCompetency);
+        this.topicLabels.push(compAvg.tagName);
       }
 
       this.topicCompAvgDataSet.push(0, 5);

@@ -1,12 +1,13 @@
-import { User } from './../models/user';
+import { UserRegistration } from './../models/user-registration';
 import { LoginResponse } from './../models/login-response';
-import { HttpClient, HttpHandler, HttpHeaders } from '@angular/common/http';
-import { Injectable, Output, EventEmitter } from '@angular/core';
-import { BehaviorSubject, pipe } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable} from '@angular/core';
+import { BehaviorSubject} from 'rxjs';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { map, tap } from  'rxjs/operators';
 import { Router } from '@angular/router';
+
+
 
 
 @Injectable({
@@ -23,6 +24,7 @@ export class AuthService {
   isLoggedIn: boolean = false;
   isTrainer: boolean = false;
   isAssigned: boolean = false;
+  registerUrl: string = environment.baseUrl+"employees";
 
   constructor(private http: HttpClient, private router:Router) {
   }
@@ -47,45 +49,13 @@ export class AuthService {
     }
     return this.batchId;
   }
-
-
-  attemptLogin(email: string, password: string ):Observable<LoginResponse>{
-    // const payload = `email=${email}&password=${password}`
-    // return this.http.post(this.loginUrl, payload, {
-    //   headers: {
-    //     "Content-Type":"application/x-www-form-urlencoded"
-    //   },
-    //   observe: 'response'
-    // }).pipe(map(res=>{
-    //     const token = res.headers.get('token');
-    //     this.setToken(token);
-    //     const user = res.body as LoginResponse;
-    //     return user;
-
-
+attemptLogin(email: string, password: string ):Observable<LoginResponse>{
   const payload = `email=${email}&password=${password}`
-  // return this.http.post(`${this.loginUrl}`, payload, this.httpOptions)
-  // const payload = `email=${email}&password=${password}`
-  return this.http.post<LoginResponse>(this.loginUrl,payload, this.httpOptions);//form parameters
-  // })).toPromise();
-  }
+  return this.http.post<LoginResponse>(this.loginUrl,payload, this.httpOptions);
+}
 
-  checkLogin(){
-    if(sessionStorage.getItem("token")){
-      this.isLoggedIn=true;
-    } else{
-      this.router.navigateByUrl("/login");
-    }
-    if(sessionStorage.getItem("userBatchId")){
-      this.isAssigned=true;
-    }
-    if(JSON.parse(sessionStorage.getItem("user")||'').role=="INSTRUCTOR"){
-      this.isTrainer=true;
-    }
-    
-  }
-
-  // setToken(token: string | null | undefined): void {
-  //   this.token = token;
-  // }
+registerNewEmployee(name: string, email: string, password: string):Observable<UserRegistration>{
+  const payload = `name=${name}&email=${email}&password=${password}`
+  return this.http.post<UserRegistration>(this.registerUrl,payload,this.httpOptions);
+}
 }

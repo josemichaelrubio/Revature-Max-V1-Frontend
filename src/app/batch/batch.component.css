@@ -6,7 +6,7 @@ header,
 }
 
 #intro {
-	background: url("https://cdn.wallpapersafari.com/43/99/IeVDtW.jpg")no-repeat center center fixed;
+	background: url("../../simple_background.jpg")no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -51,7 +51,7 @@ header,
 }
 
 #dashboard {
-	background: url("https://cdn.wallpapersafari.com/43/99/IeVDtW.jpg")no-repeat center center fixed;
+	background: url("../../simple_background.jpg")no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -60,14 +60,10 @@ header,
 }
 
 #blank {
-	background: url("https://cdn.wallpapersafari.com/43/99/IeVDtW.jpg")no-repeat center center fixed;
+	background: url("../../simple_background.jpg")no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
 
-}
-
-app-averages {
-	padding: 0;
 }

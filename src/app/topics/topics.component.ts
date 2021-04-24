@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { take } from 'rxjs/operators';
 import { TopicService } from '../services/topic.service';
 import { Topic } from '../models/topic';
@@ -11,7 +11,7 @@ import { Notes } from '../models/notes';
 })
 export class TopicsComponent implements OnInit {
 
-  userId = 1; //JSON.parse(sessionStorage.getItem("user")!).id; 
+  userId = JSON.parse(sessionStorage.getItem("user")!).id; 
 
   topic!: Topic;
   competency!: number | null;
