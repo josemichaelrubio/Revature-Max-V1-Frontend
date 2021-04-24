@@ -25,15 +25,15 @@ export class TopicService {
     let user = JSON.parse(sessionStorage.getItem('user') || '');
     let headers = new HttpHeaders();
     headers.set('Authorization', sessionStorage.getItem('token') || '');
-    this.http.put(`${this.hostURL}/employees/${user.id}/topics/${this.selectedTopicId}`, JSON.stringify(employeeTopic),
+    this.http.put(`${this.hostURL}/employees/${user.id}/topics/${this.selectedTopicId}`, employeeTopic,
       { headers: headers });
   }
 
-  setNotes(notes: Notes) {
+  setNotes(notes: string) {
     let user = JSON.parse(sessionStorage.getItem('user') || '');
     let headers = new HttpHeaders();
     headers.set('Authorization', sessionStorage.getItem('token') || '');
-    this.http.put(`${this.hostURL}/employees/${user.id}/notes`, JSON.stringify(notes), { headers: headers });
+    this.http.put(`${this.hostURL}/employees/${user.id}/notes`, notes, { headers: headers });
   }
 
 }

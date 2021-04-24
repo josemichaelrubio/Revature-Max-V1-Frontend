@@ -11,9 +11,11 @@ import { Notes } from '../models/notes';
 })
 export class TopicsComponent implements OnInit {
 
+  userId = JSON.parse(sessionStorage.getItem("user")!).id; 
+
   topic!: Topic;
-  competency!: number;
-  starredNotesId!: number;
+  competency!: number | null;
+  starredNotesId!: number | null;
   notes = new Array<Notes>();
 
   constructor(private topicService: TopicService) { }
@@ -28,15 +30,28 @@ export class TopicsComponent implements OnInit {
   }
 
   updateCompetency(): void {
-    //employeeTopic = 
+    let employeeTopic = { "competency": this.competency, "favNotes": this.starredNotesId };
+    this.topicService.setEmployeeTopic(JSON.stringify(employeeTopic));
   }
 
-  updateStarredNotesId(): void {
-
+  updateStarredNotesId(notesSelected: Notes): void {
+    if (this.starredNotesId == notesSelected.id) {
+      this.starredNotesId = null;
+      notesSelected.timesStarred--;
+    } else {
+      if (this.starredNotesId !== null) {
+        this.notes.find(i => i.id == this.starredNotesId)!.timesStarred--;
+      }
+      this.starredNotesId = notesSelected.id;
+      notesSelected.timesStarred++;
+    }
+    let employeeTopic = { "competency": this.competency, "favNotes": this.starredNotesId };
+    this.topicService.setEmployeeTopic(JSON.stringify(employeeTopic));
   }
 
-  updateNotes(): void {
-
+  updateNotes(userNotes: Notes): void {
+    let o = { "id": userNotes.id, "topic": { "id": this.topicService.selectedTopicId }, "notes": userNotes.content };
+    this.topicService.setNotes(JSON.stringify(o));
   }
 
 }
