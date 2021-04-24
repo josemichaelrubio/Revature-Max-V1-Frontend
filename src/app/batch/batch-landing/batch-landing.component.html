@@ -20,10 +20,15 @@
                     <hr class="hr-light" style="color:white;">
 
                     <!-- Description -->
-                    <h4 class="my-4" style="color:white;">Batch Dashboard - </h4>
+                    <h4 class="my-4" style="color:white;">Batch-Associate Dashboard</h4>
                     <br>
-                    <a type="button" class="btn btn-outline-light" (click)='openDash()' *ngIf='!dashOpened' style="color:white;">Open Dashboard</a>
+                    <a type="button" class="btn btn-outline-light" (click)='openDash()' *ngIf='!dashOpened' style="color:white">Open Dashboard</a>
                     <br><br>
+                    <div class="btn-group" role="group">
+                      <a type="button" class="btn btn-outline-light" routerLink='associates' *ngIf='dashOpened'>My Info</a>
+                      <a type="button" class="btn btn-outline-light" routerLink='averages' *ngIf='dashOpened'>Batch Averages</a>
+                      <a type="button" class="btn btn-outline-light" routerLink='curriculum' *ngIf='dashOpened'>Curriculum</a>
+                    </div>
                   </div>
         
                 </div>
