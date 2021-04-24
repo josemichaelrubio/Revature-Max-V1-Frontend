@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { TopicsRoutingModule } from './topics-routing.module';
 import { TopicsComponent } from './topics.component';
 import { SidenavModule } from '../sidenav/sidenav.module';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -13,7 +13,8 @@ import { SidenavModule } from '../sidenav/sidenav.module';
   imports: [
     CommonModule,
     TopicsRoutingModule,
-    SidenavModule
+    SidenavModule,
+    FormsModule
   ]
 })
 export class TopicsModule { }

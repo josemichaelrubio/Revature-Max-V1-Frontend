@@ -1,7 +1,8 @@
 import { LoginResponse } from './../models/login-response';
 import { AuthService } from './../services/auth.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
+import { NavChangeService } from 'app/services/nav-change.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,9 @@ export class LoginComponent implements OnInit {
   message: string = "";
   response!: LoginResponse;
 
-  constructor(private authService: AuthService, private router: Router) { } //for all of our services, we want to do dependency injection
+  loggedIn!: boolean;
+
+  constructor(private authService: AuthService, private router: Router, private nav: NavChangeService) { } //for all of our services, we want to do dependency injection
 
   // login(){
 
@@ -42,13 +45,14 @@ export class LoginComponent implements OnInit {
 
       sessionStorage.setItem("token",this.response.token);
       sessionStorage.setItem("user", JSON.stringify(this.response.user));
+      sessionStorage.setItem("userBatchId", this.response.userBatchId.toString());
+
+      console.log("changing navbar state");
+      this.nav.setNavbarState(true);
 
       if(this.response.userBatchId== null){
         this.router.navigateByUrl("associates");
-      };
-
-      sessionStorage.setItem("userBatchId", this.response.userBatchId.toString());
-
+      }
       if(this.response.user.role == "INSTRUCTOR"){
         this.router.navigateByUrl("trainers");
       }else{

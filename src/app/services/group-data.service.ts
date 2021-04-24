@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../models/user';
+import { environment } from 'environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,11 +10,13 @@ import { User } from '../models/user';
 export class GroupDataService {
 
 
-  batchId: any = sessionStorage.getItem("userBatchId");
-  token: any = sessionStorage.getItem("token");
+  batchId: number = +(sessionStorage.getItem("userBatchId") || 0);
+  token: string = sessionStorage.getItem("token") || '';
 
-  batchUrl: string = `http://20.185.67.43/batches/${this.batchId}`;
-  batchAssociatesUrl: string = `http://20.185.67.43/batches/${this.batchId}/associates`;
+  batchUrl: string = environment.baseUrl+`/batches/${this.batchId}`;
+  batchAssociatesUrl: string = environment.baseUrl+`/batches/${this.batchId}/associates`;
+
+  testBatchUrl: string = "http://localhost:80/batches/1/associates"
 
   httpOptions = {
     headers: new HttpHeaders({"Authorization": this.token})
@@ -25,7 +28,7 @@ export class GroupDataService {
     return this.http.get<User[]>(this.batchAssociatesUrl)
   }
 
-  addAssociates(associates: string[]): Observable<User[]>{
+  addAssociates(associates: User[]): Observable<User[]>{
     return this.http.post<User[]>(this.batchAssociatesUrl, associates, this.httpOptions);
   }
 

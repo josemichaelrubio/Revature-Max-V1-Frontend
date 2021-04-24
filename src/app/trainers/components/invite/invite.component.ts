@@ -39,9 +39,17 @@ export class InviteComponent implements OnInit {
   }
 
   onClickSubmit(){
-    this.groupData.addAssociates(this.emails).subscribe((empsReturned)=>this.associates=empsReturned, 
+
+    for(let email of this.emails){
+      this.associates.push(new User(null, email, null, null))
+    }
+
+    this.groupData.addAssociates(this.associates).subscribe((empsReturned)=>this.associates=empsReturned, 
     ()=>this.errorMessage='Could not add employees to batch', 
     ()=>this.successMessage = "Employees were added to batch successfully");
+
+    this.groupData.getAllAssociates().subscribe((usersReturned)=>this.associates=usersReturned,
+    (err)=>{this.errorMessage = "Could not find any associates for your assigned batch!"});
   }
 
   openAssignment(){

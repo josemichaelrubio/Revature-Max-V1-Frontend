@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CalendarOptions } from '@fullcalendar/angular';
+import { TopicService } from 'app/services/topic.service';
 
 @Component({
   selector: 'app-curriculum',
@@ -8,7 +10,7 @@ import { CalendarOptions } from '@fullcalendar/angular';
 })
 export class CurriculumComponent implements OnInit {
 
-  constructor() { }
+  constructor(private topicService: TopicService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -30,5 +32,12 @@ export class CurriculumComponent implements OnInit {
   toggleWeekends() {
     this.calendarOptions.weekends = !this.calendarOptions.weekends // toggle the boolean!
   }
+
+  checkTopicOne(){
+    this.topicService.selectedTopicId = 1;
+    this.router.navigateByUrl("/topics");
+  }
+
+
 
 }

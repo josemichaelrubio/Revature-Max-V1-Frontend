@@ -41,7 +41,6 @@
         <input type="text" class="form-control" id="emailInput" name="email" placeholder="@revature.net" formControlName="email">
         <label for="emailInput">Associate Email Address</label> 
         <br>
-        <!-- <input type="submit" class="forsubmit" value="Add to List"> -->
         <button class="btn btn-lg btn-outline-dark" type="submit">Add to List</button>
     </form>
     <br>
@@ -49,7 +48,7 @@
         <li class="list-group-item" *ngFor="let e of emails">{{e}}</li>
     </ol>
     <br>
-    <button class="btn btn-lg btn-outline-dark" (click)="onClickSubmit">Submit to Batch</button>
+    <button class="btn btn-lg btn-outline-dark" (click)="onClickSubmit()">Submit to Batch</button>
     <br><br>
 </section>
 
