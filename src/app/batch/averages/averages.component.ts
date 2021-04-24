@@ -28,6 +28,8 @@ export class AveragesComponent implements OnInit {
   topicLabels : string[] = [];
   countForTopics : number[] = [];
 
+  tagCompAvg : any = [];
+  tagCompetencies : any = {};
 
   associateQuizScoresDataSet : number[] = [];
 
@@ -45,7 +47,7 @@ export class AveragesComponent implements OnInit {
 
           for (let topicAvg of this.batchInfoAverages.competencyAverage) {
             this.topicAveragesDataSet.push(topicAvg.averageCompetency);
-            this.topicLabels.push(topicAvg.tagName);
+            this.topicLabels.push(topicAvg.tagName + " (count: " + topicAvg.competenciesCounted + ")");
             this.countForTopics.push(topicAvg.competenciesCounted);
           }
 
@@ -57,15 +59,40 @@ export class AveragesComponent implements OnInit {
 
       associateDataService.getEmployeeInfo().pipe(take(1)).subscribe(
            (response: EmployeeInfo) => {
-             console.log(response);
              this.employeeInfo = response;
              for (let empQuiz of this.employeeInfo.quizzes) {
                this.associateQuizScoresDataSet.push(empQuiz.score);
              }
 
              this.associateQuizScoresDataSet.push(0, 100);
-           },
-           (error) => console.log("There is an error"),
+
+        
+             for (let empTopic of this.employeeInfo.topics) {
+                 if (!(empTopic.topic.tag.name in this.tagCompetencies)) {
+                    this.tagCompetencies[empTopic.topic.tag.name] = [];
+                    this.tagCompetencies[empTopic.topic.tag.name].push(empTopic.competency);
+                 }
+
+                 else {
+                   this.tagCompetencies[empTopic.topic.tag.name].push(empTopic.competency)
+
+                 }
+            }
+
+            for (let tagName in this.tagCompetencies) {
+              let length = this.tagCompetencies[tagName].length;
+              let sum = 0;
+              for (let i=0; i < length; i++) {
+                sum += this.tagCompetencies[tagName][i];
+              }
+              let average = sum/length;
+              this.tagCompAvg.push(average);
+
+            }
+
+          },
+            
+           (error) => console.log(error),
            () => console.log(this.employeeInfo)
         )
   }
@@ -86,8 +113,9 @@ export class AveragesComponent implements OnInit {
   barChartPluginsQuizzes = [];
 
   barChartDataQuizzes: ChartDataSets[] = [
-    { data: this.quizAveragesDataSet, label: 'Quiz Average for Batch' },
-    { data: this.associateQuizScoresDataSet, label: 'Your Score'},
+    { data: this.associateQuizScoresDataSet, label: 'Your Score', backgroundColor: 'rgba(248, 148, 6, 1)', hoverBackgroundColor: 'rgba(214, 116, 4, 0.6)' },
+    { data: this.quizAveragesDataSet, label: 'Quiz Average for Batch', backgroundColor: 'rgba(0, 0, 0, 0.8)', hoverBackgroundColor: 'rgba(0, 0, 0, 0.6)' }
+    ,
   ];
 
    barChartOptionsTopics: ChartOptions = {
@@ -99,8 +127,9 @@ export class AveragesComponent implements OnInit {
   barChartPluginsTopics = [];
 
   barChartDataTopics: ChartDataSets[] = [
-    { data: this.topicAveragesDataSet, label: 'Topic Competency Average for Batch' },
-    { data: this.countForTopics, label: 'Number of Competencies Submitted for Topic'}
+    { data: this.tagCompAvg, label: 'Associate Topic Competency', backgroundColor: 'rgba(248, 148, 6, 1)', hoverBackgroundColor: 'rgba(214, 116, 4, 0.6)' },
+    { data: this.topicAveragesDataSet, label: 'Topic Competency Average for Batch', backgroundColor: 'rgba(0, 0, 0, 0.8)', hoverBackgroundColor: 'rgba(0, 0, 0, 0.6)'}
+    
   ];
 
 }
