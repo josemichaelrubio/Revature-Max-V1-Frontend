@@ -3,8 +3,9 @@
     <div class="container">
 
       <!-- Navbar brand -->
-      <a class="navbar-brand" routerLink="/home"><img src='https://cdn.discordapp.com/attachments/829497330021302322/834067085109231626/revature-max-logo-removebg-preview.png' alt="Revature" style="height: 60px; width: 150px;"></a>
-  
+      <a class="navbar-brand" routerLink="/home">
+        <img src='https://cdn.discordapp.com/attachments/829497330021302322/834067085109231626/revature-max-logo-removebg-preview.png' alt="Revature" style="height: 60px; width: 150px;"></a>
+
       <!-- Collapse button -->
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
         aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,8 +31,9 @@
             <!-- Links -->
         </div>
         <div style='float: right;'>
-            <button routerLink="/login" class="btn btn-outline-light btn-round" *ngIf="!isLoggedIn">Log In</button>
-            <button class="btn btn-outline-light btn-round" *ngIf="isLoggedIn">Log Out</button>
+            <button routerLink="/login" class="btn btn-outline-light btn-round" *ngIf="!isLoggedIn" (click)="loggedIn()">Log In</button>
+            <!-- <button routerLink="/home" class="btn btn-outline-light btn-round" *ngIf="isLoggedOut" (click)="clearSessionStorage()">Log Out</button> -->
+            <button routerLink="/home" class="btn btn-outline-light btn-round" *ngIf="isLoggedIn" (click)="clearSessionStorage()">Log Out</button>
         </div>
 
 

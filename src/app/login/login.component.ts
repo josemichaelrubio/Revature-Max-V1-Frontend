@@ -15,26 +15,14 @@ export class LoginComponent implements OnInit {
   message: string = "";
   response!: LoginResponse;
 
-  constructor(private authService: AuthService, private router: Router) { } //for all of our services, we want to do dependency injection
-
-  // login(){
-
-  //   this.authService.attemptLogin(this.email,this.password).subscribe((res)=>{
-  //     console.log("Logged in!");
-  //     sessionStorage.setItem("token",this.response._token)
-  //     this.router.navigateByUrl("home");
-  //   })
-  // }
+  constructor(private authService: AuthService, private router: Router) { }
 
   login(){
-
 
     this.authService.attemptLogin(this.email,this.password).subscribe(
       (res)=>{
         this.message = "Successful login";
         this.response = res;
-
-
     },
     (res)=>{this.message = res.error.title;
     },
@@ -56,6 +44,7 @@ export class LoginComponent implements OnInit {
       }
     })
   }
+
   ngOnInit(): void {
   }
 

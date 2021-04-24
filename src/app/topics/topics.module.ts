@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { FormsModule } from '@angular/forms';
 import { TopicsRoutingModule } from './topics-routing.module';
 import { TopicsComponent } from './topics.component';
 import { SidenavModule } from '../sidenav/sidenav.module';
@@ -12,6 +12,7 @@ import { SidenavModule } from '../sidenav/sidenav.module';
   ],
   imports: [
     CommonModule,
+    FormsModule,
     TopicsRoutingModule,
     SidenavModule
   ]

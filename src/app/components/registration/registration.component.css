@@ -30,10 +30,6 @@ body {
 
 }
 
-.our-grey {
-    background-color:black;
-}
-
 h1{
   color: white;
   text-align: center;
@@ -41,8 +37,4 @@ h1{
 
 #intro{
   background-color: #161616;
-}
-
-#remember-me{
-  color:white
 }
