@@ -1,0 +1,50 @@
+<div class='container text-center'>
+    <p style='color: red;'>{{errorMessage}}</p>
+</div>
+<section id="wrapper" class="text-center">
+    <br>
+    <table class="table table-hover table-striped">
+        <caption>Associates In Your Batch</caption>
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Email</th>
+                <th scope="col">Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let employee of associates">
+                <td>{{employee.id}}</td>
+                <td>{{employee.email}}</td>
+                <td>{{employee.name}}</td>
+                <td><button class="btn btn-sm btn-outline-dark" (click)="removeEmp(employee)" style="color:red;">Delete</button></td>
+            </tr>
+        </tbody>
+        
+
+    </table>
+</section>
+    <br>
+    <div class="container justify-content-center text-center">
+      <a type="button" class="btn btn-outline-light btn-lg" (click)='openAssignment()' style="color:white;">Add Associates</a>  
+    </div>
+    
+    <br>
+<section id='wrapper' class="container justify-content-center text-center" *ngIf="editorOpened">
+    <br><br>
+    <form class="form-floating" [formGroup]="formData" (ngSubmit)="onClickAddEmail(formData.value)" >
+
+        <input type="text" class="form-control" id="emailInput" name="email" placeholder="@revature.net" formControlName="email">
+        <label for="emailInput">Associate Email Address</label> 
+        <br>
+        <button class="btn btn-lg btn-outline-dark" type="submit">Add to List</button>
+    </form>
+    <br>
+    <ol class="list-group list-group-flush">
+        <li class="list-group-item" *ngFor="let e of emails">{{e}}</li>
+    </ol>
+    <br>
+    <button class="btn btn-lg btn-outline-dark" (click)="onClickSubmit()">Submit to Batch</button>
+    <br><br>
+</section>
+

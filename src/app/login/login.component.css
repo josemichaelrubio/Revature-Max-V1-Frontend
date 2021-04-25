@@ -1,0 +1,55 @@
+body {
+	margin:0;
+	padding:0;
+	font-family: Verdana, Geneva, sans-serif;
+    background: url('../../simple_background.jpg')no-repeat center center fixed;
+    background-size: cover;
+}
+
+
+.form-signin {
+    padding: 0 30%;
+    min-width: 275px;
+}
+
+.btn-outline-success {
+    border-color:#007bff;
+    color: #007bff;
+}
+
+.form-signin > input {
+    margin-bottom: 20px;
+}
+
+.rev-logo {
+    display: block;
+    margin: 10px auto 0;
+    width: auto;
+}
+
+.container {
+    padding: 10rem 0;
+
+}
+
+.our-grey {
+    background-color:black;
+}
+
+h1{
+  color: white;
+  text-align: center;
+}
+
+#intro{
+    background-color: #161616;
+    margin:0;
+	padding:0;
+	font-family: Verdana, Geneva, sans-serif;
+    background: url('../../simple_background.jpg')no-repeat center center fixed;
+    background-size: cover;
+}
+
+#remember-me{
+  color:white
+}

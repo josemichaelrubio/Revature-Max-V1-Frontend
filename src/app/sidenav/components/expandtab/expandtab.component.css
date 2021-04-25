@@ -1,0 +1,11 @@
+.tab {
+    width: 68px;
+    position: fixed;
+    z-index: 1;
+    top: 350px;
+    left: -10px;
+    background: white;
+    border-radius: 1em;
+    overflow-x: hidden;
+    padding: 8px 0;
+}
