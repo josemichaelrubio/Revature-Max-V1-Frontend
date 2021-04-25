@@ -1,6 +1,6 @@
 <div class="cal">
     <button class="btn btn-lg btn-outline-dark" (click)="toggleWeekends()">toggle weekends</button>
-    <a class="btn btn-lg btn-outline-dark" data-toggle="modal" data-target="#exampleModalCenter">Add Topic Event</a>
+    <a class="btn btn-lg btn-outline-dark" data-toggle="modal" data-target="#exampleModalCenter" (click)="loadTags()">Add Topic Event</a>
     <a class="btn btn-lg btn-outline-dark" data-toggle="modal" data-target="#removeModalCenter">Remove Topic Event</a>
     <br><br>
     <full-calendar [options]="calendarOptions"></full-calendar>
@@ -22,9 +22,17 @@
             <div class="form-group">
                 <label class="control-label">Adding Topic to Curriculum</label>
                 <h3>{{day}}</h3>
+                <br>
                 <div>
                     <form [formGroup]="formData">
-                       <input type="text" class="form-control" id="eventInput" name="topic" placeholder="Topic" formControlName="topicName">
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Choose Topic Tag</option>
+                            <option *ngFor="let tag of tagList" (change)="loadTopics()">{{tag.name}}</option>
+                        </select>
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Choose Topic</option>
+                            <option *ngFor="let topic of topicList">{{topic.name}}</option>
+                          </select>
                     </form>
                     
                     
@@ -54,8 +62,8 @@
                     <label class="control-label">Remove Topic</label>
                     <h3>{{day}}</h3>
                     <div>
-                        <form [formGroup]="formData">
-                           <input type="text" class="form-control" id="eventInput" name="topic" placeholder="Topic" formControlName="topicName">
+                        <form [formGroup]="formRemoveData">
+                           <input type="text" class="form-control" id="eventInput" name="topic" placeholder="{{topicNameClick}}" value="{{topicNameClick}}" formControlName="topicName">
                         </form>
                         
                         
