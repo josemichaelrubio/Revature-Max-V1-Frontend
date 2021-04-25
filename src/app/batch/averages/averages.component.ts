@@ -51,7 +51,7 @@ export class AveragesComponent implements OnInit {
             this.countForTopics.push(topicAvg.competenciesCounted);
           }
 
-          this.topicAveragesDataSet.push(0, 20);
+          this.topicAveragesDataSet.push(0, 5);
         },
   			(error) => console.log("There is an error"),
   			() => console.log(this.batchInfoAverages)

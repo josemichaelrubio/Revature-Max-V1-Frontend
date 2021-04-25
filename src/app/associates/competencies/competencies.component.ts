@@ -7,6 +7,7 @@ import { map, take } from 'rxjs/operators';
 import { ChartOptions, ChartType, ChartDataSets, RadialChartOptions } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
 
+
 @Component({
   selector: 'app-competencies',
   templateUrl: './competencies.component.html',
@@ -21,6 +22,7 @@ export class CompetenciesComponent implements OnInit {
   	tagNames : string[] = [];
 
   	associateQuizScoresDataSet : number[] = [];
+    quizNames : string[] = [];
 
 
   constructor(private associateDataService: AssociateDataService) { 
@@ -44,10 +46,11 @@ export class CompetenciesComponent implements OnInit {
              console.log(response);
              this.employeeInfo = response;
              for (let empQuiz of this.employeeInfo.quizzes) {
+               this.quizNames.push(empQuiz.quiz.name);
                this.associateQuizScoresDataSet.push(empQuiz.score);
              }
 
-             this.associateQuizScoresDataSet.push(0, 100);
+             //.associateQuizScoresDataSet.push(50, 100);
 
         
              for (let empTopic of this.employeeInfo.topics) {
@@ -106,6 +109,12 @@ export class CompetenciesComponent implements OnInit {
 
   radarChartOptions: RadialChartOptions = {
     responsive: true,
+    scale: {
+      ticks: {
+        min: 0,
+        max: 5
+      }
+    }
   };
   radarChartLabels: Label[] = this.tagNames;
 
@@ -113,29 +122,29 @@ export class CompetenciesComponent implements OnInit {
     { data: this.tagCompAvg, label: 'Associate Topic Competency Analysis', backgroundColor: 'rgba(248, 148, 6, 0.2)', borderColor: 'rgba(248, 148, 6, 1)'  }
   ];
 
-  //backgroundColor: 'rgba(248, 148, 6, 1)'
   radarChartType: ChartType = 'radar';
 
 
     lineChartData: ChartDataSets[] = [
-    { data: [85, 72, 78, 75, 77, 75], label: 'Crude oil prices' },
+    { data: this.associateQuizScoresDataSet, label: 'Quiz Score' },
   ];
 
-  lineChartLabels: Label[] = ['January', 'February', 'March', 'April', 'May', 'June'];
+  lineChartLabels: Label[] = this.quizNames;
 
   lineChartOptions = {
     responsive: true,
+
   };
 
   lineChartColors: Color[] = [
     {
-      borderColor: 'black',
-      backgroundColor: 'rgba(255,255,0,0.28)',
+      borderColor: 'rgba(248, 148, 6, 1)',
+      backgroundColor: 'rgba(248, 148, 6, 0.2)',
     },
   ];
 
   lineChartLegend = true;
   lineChartPlugins = [];
-  lineChartType = 'line';
+  lineChartType : ChartType = 'line';
 
 }
