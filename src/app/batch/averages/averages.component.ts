@@ -85,7 +85,7 @@ export class AveragesComponent implements OnInit {
               for (let i=0; i < length; i++) {
                 sum += this.tagCompetencies[tagName][i];
               }
-              let average = sum/length;
+              let average = (sum/length).toPrecision(2);
               this.tagCompAvg.push(average);
 
             }
