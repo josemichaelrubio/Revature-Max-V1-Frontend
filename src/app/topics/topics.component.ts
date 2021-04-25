@@ -43,7 +43,7 @@ export class TopicsComponent implements OnInit {
           }
         }
         if (!userNotesPresent) {
-          this.notes.push({ id: null, employee: { id: this.userId, name: this.userName }, timesStarred: 0, content: "" });
+          this.notes.push({ notesId: null, employee: { id: this.userId, name: this.userName }, timesStarred: 0, content: "" });
         }
       }, (err) => {
         console.log(err);
@@ -65,14 +65,14 @@ export class TopicsComponent implements OnInit {
     let employeeTopic = { "competency": this.competency, "favNotes": this.starredNotesId };
     this.topicService.setEmployeeTopic(JSON.stringify(employeeTopic)).pipe(take(1)).subscribe(
       (res) => {
-        if (this.starredNotesId == notesSelected.id) {
+        if (this.starredNotesId == notesSelected.notesId) {
           this.starredNotesId = null;
           notesSelected.timesStarred--;
         } else {
           if (this.starredNotesId !== null) {
-            this.notes.find(i => i.id == this.starredNotesId)!.timesStarred--;
+            this.notes.find(i => i.notesId == this.starredNotesId)!.timesStarred--;
           }
-          this.starredNotesId = notesSelected.id;
+          this.starredNotesId = notesSelected.notesId;
           notesSelected.timesStarred++;
         }
       }, (err) => {
@@ -82,14 +82,14 @@ export class TopicsComponent implements OnInit {
   }
 
   updateNotes(userNotes: Notes): void {
-    let o = { "id": userNotes.id ? userNotes.id : null, "topic": { "id": this.topicService.selectedTopicId }, "notes": userNotes.content };
+    let o = { "id": userNotes.notesId ? userNotes.notesId : null, "topic": { "id": this.topicService.selectedTopicId }, "notes": userNotes.content };
     this.topicService.setNotes(JSON.stringify(o)).pipe(take(1)).subscribe(
       (res) => {
-        if (!userNotes.id) {
+        if (!userNotes.notesId) {
           if (!res) {
-            userNotes.id = null;
+            userNotes.notesId = null;
           } else {
-            userNotes.id = res;
+            userNotes.notesId = res;
           }
         }
       }, (err) => {

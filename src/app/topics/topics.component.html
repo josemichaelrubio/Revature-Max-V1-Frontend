@@ -20,11 +20,11 @@
                 </p>
                 <ul>
                     <li *ngFor="let n of notes; let index = index; trackBy:trackByIndex">
-                        <div [(ngModel)]="notes[index]" ngDefaultControl>
+                        <div >
                             <h3>{{n.employee.name}}'s Notes</h3>
                             <div *ngIf="n.employee.id != userId">{{n.content}}</div>
-                            <textarea *ngIf="n.employee.id == userId" style="width:100%;height:20em">{{n.content}}</textarea><br>
-                            <button *ngIf="n.employee.id == userId" (click)=updateNotes(n)>Save</button>
+                            <textarea *ngIf="n.employee.id == userId" [(ngModel)]="notes[index].content" style="width:100%;height:20em"></textarea><br>
+                            <button *ngIf="n.employee.id == userId" (click)=updateNotes(notes[index])>Save</button>
                         </div>
                     </li>
                 </ul>
