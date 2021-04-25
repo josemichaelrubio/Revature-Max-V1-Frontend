@@ -23,7 +23,7 @@
                         <div [(ngModel)]="notes[index]" ngDefaultControl>
                             <h3>{{n.employee.name}}'s Notes</h3>
                             <div *ngIf="n.employee.id != userId">{{n.content}}</div>
-                            <textarea *ngIf="n.employee.id == userId" style="width:100%">{{n.content}}</textarea><br>
+                            <textarea *ngIf="n.employee.id == userId" style="width:100%;height:20em">{{n.content}}</textarea><br>
                             <button *ngIf="n.employee.id == userId" (click)=updateNotes(n)>Save</button>
                         </div>
                     </li>

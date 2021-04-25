@@ -82,11 +82,15 @@ export class TopicsComponent implements OnInit {
   }
 
   updateNotes(userNotes: Notes): void {
-    let o = { "id": userNotes.id, "topic": { "id": this.topicService.selectedTopicId }, "notes": userNotes.content };
+    let o = { "id": userNotes.id ? userNotes.id : null, "topic": { "id": this.topicService.selectedTopicId }, "notes": userNotes.content };
     this.topicService.setNotes(JSON.stringify(o)).pipe(take(1)).subscribe(
       (res) => {
         if (!userNotes.id) {
-          userNotes.id = res;
+          if (!res) {
+            userNotes.id = null;
+          } else {
+            userNotes.id = res;
+          }
         }
       }, (err) => {
         console.log(err);
