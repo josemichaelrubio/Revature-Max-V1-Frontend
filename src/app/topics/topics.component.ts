@@ -3,7 +3,6 @@ import { take } from 'rxjs/operators';
 import { TopicService } from '../services/topic.service';
 import { Topic } from '../models/topic';
 import { Notes } from '../models/notes';
-import * as $ from 'jquery';
 
 @Component({
   selector: 'app-topics',

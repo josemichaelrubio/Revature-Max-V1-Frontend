@@ -14,26 +14,21 @@ export class TopicService {
 
   getTopicDTO(): Observable<TopicDTO> {
     let batchId = sessionStorage.getItem("userBatchId");
-    let headers = new HttpHeaders();
-    headers.set('Authorization', sessionStorage.getItem('token') || '');
+    let headers = new HttpHeaders({'Authorization': sessionStorage.getItem('token') || ''});
     return this.http.get<TopicDTO>(environment.baseUrl+`/batches/${batchId}/topics/${this.selectedTopicId}`,
       { headers: headers });
   }
 
   setEmployeeTopic(employeeTopic: string) : Observable<any> {
     let user = JSON.parse(sessionStorage.getItem('user') || '');
-    let headers = new HttpHeaders();
-    headers.set('Authorization', sessionStorage.getItem('token') || '');
-    headers.set('Content-Type', 'application/json');
+    let headers = new HttpHeaders({'Authorization': sessionStorage.getItem('token') || '', 'Content-Type': 'application/json'});
     return this.http.put(environment.baseUrl+`/employees/${user.id}/topics/${this.selectedTopicId}`, employeeTopic,
       { headers: headers });
   }
 
   setNotes(notes: string) : Observable<any> {
     let user = JSON.parse(sessionStorage.getItem('user') || '');
-    let headers = new HttpHeaders();
-    headers.set('Authorization', sessionStorage.getItem('token') || '');
-    headers.set('Content-Type', 'application/json');
+    let headers = new HttpHeaders({'Authorization': sessionStorage.getItem('token') || '', 'Content-Type': 'application/json'});
     return this.http.put(environment.baseUrl+`/employees/${user.id}/notes`, notes, { headers: headers });
   }
 

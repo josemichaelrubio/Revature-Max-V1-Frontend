@@ -1,16 +1,42 @@
-<div class="container">
-    <h1>{{topic.tag.name}}: {{topic.name}}</h1>
-    <p>My competency: 
-        <input type="number" [(ngModel)]="competency" (ngModelChange)="updateCompetency()"
-        [ngModelOptions]="{updateOn: 'blur'}" />
-    </p>
-    <ul>
-        <li *ngFor="let n of notes; let index = index; trackBy:trackByIndex">
-            <div [(ngModel)]="notes[index]" [class.starred]="starredNotesId == n.id">
-                <h3>{{n.employee.name}}'s Notes - {{n.timesStarred}} times starred - </h3>
-                <div class="input" role="textbox" [class.disabled]="n.employee.id != userId">{{n.content}}</div>
-                <button (click)=updateNotes(n) [class.hidden]="n.employee.id != userId">Save</button>
+
+<div id="intro" class="view">
+
+    <div class="mask rgba-black-strong">
+
+      <div class="container-fluid d-flex align-items-center justify-content-center h-100">
+
+        <div class="row d-flex justify-content-center text-center">
+
+          <div class="col-md-10">
+
+            <br><br><br><br><br><br><br><br><br><br> 
+
+
+            <div class="container">
+                <h1 style="color:white;">{{topic.tag.name}}</h1>
+                <h1 style="color:white;"> {{topic.name}}</h1>
+                <p>My competency: 
+                    <input type="number" [(ngModel)]="competency" (ngModelChange)="updateCompetency()"
+                    [ngModelOptions]="{updateOn: 'blur'}" />
+                </p>
+                <ul>
+                    <li *ngFor="let n of notes; let index = index; trackBy:trackByIndex">
+                        <div [(ngModel)]="notes[index]" [class.starred]="starredNotesId == n.id">
+                            <h3>{{n.employee.name}}'s Notes - {{n.timesStarred}} times starred - </h3>
+                            <div class="input" role="textbox" [class.disabled]="n.employee.id != userId">{{n.content}}</div>
+                            <button (click)=updateNotes(n) [class.hidden]="n.employee.id != userId">Save</button>
+                        </div>
+                    </li>
+                </ul>
             </div>
-        </li>
-    </ul>
-</div>
+           
+            <br><br><br><br><br><br><br><br><br><br><br><br>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
