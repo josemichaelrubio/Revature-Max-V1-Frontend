@@ -1,5 +1,5 @@
 export interface Notes {
-    id: number;
+    id: number | null;
     employee: { id: number, name: string };
     timesStarred: number;
     content: string;

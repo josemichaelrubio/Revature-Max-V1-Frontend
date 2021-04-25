@@ -1,5 +1,6 @@
 import { Component, OnInit} from '@angular/core';
-import { take } from 'rxjs/operators';
+import { take, filter } from 'rxjs/operators';
+import { Router, NavigationEnd } from '@angular/router';
 import { TopicService } from '../services/topic.service';
 import { Topic } from '../models/topic';
 import { Notes } from '../models/notes';
@@ -11,22 +12,39 @@ import { Notes } from '../models/notes';
 })
 export class TopicsComponent implements OnInit {
 
-  userId = JSON.parse(sessionStorage.getItem("user")!).id; 
+  userId = JSON.parse(sessionStorage.getItem("user")!).id;
+  userName = JSON.parse(sessionStorage.getItem("user")!).name;
 
   topic!: Topic;
-  competency!: number | null;
-  starredNotesId!: number | null;
+  competency: number | null = null;
+  starredNotesId: number | null = null;
   notes = new Array<Notes>();
 
-  constructor(private topicService: TopicService) { }
+  constructor(private router: Router, private topicService: TopicService) {
+    this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: any) => {
+      if (event.url == '/topics') {
+        this.ngOnInit();
+      }
+    });
+  }
 
   ngOnInit(): void {
-    this.topicService.getTopicDTO().pipe(take(1)).subscribe(
+    this.topicService.getTopicDTO().subscribe(
       (res) => { 
         this.topic = res.topic;
-        this.competency = res.competency;
+        this.competency = res.competency || 0;
         this.starredNotesId = res.starredNotesId;
         this.notes = res.notes;
+        let userNotesPresent = false;
+        for (let n of this.notes) {
+          if (n.employee.id == this.userId) {
+            userNotesPresent = true;
+            break;
+          }
+        }
+        if (!userNotesPresent) {
+          this.notes.push({ id: null, employee: { id: this.userId, name: this.userName }, timesStarred: 0, content: "" });
+        }
       }, (err) => {
         console.log(err);
       }

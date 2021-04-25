@@ -13,18 +13,18 @@
 
 
             <div class="container">
-                <h1 style="color:white;">{{topic.tag.name}}</h1>
-                <h1 style="color:white;"> {{topic.name}}</h1>
-                <p>My competency: 
-                    <input type="number" [(ngModel)]="competency" (ngModelChange)="updateCompetency()"
+                <h1 style="color:white;">({{topic.tag.name}}) {{topic.name}}</h1>
+                <p style="color:white;">My competency: 
+                    <input type="range" min="0" max="5" [(ngModel)]="competency" (ngModelChange)="updateCompetency()"
                     [ngModelOptions]="{updateOn: 'blur'}" />
                 </p>
                 <ul>
                     <li *ngFor="let n of notes; let index = index; trackBy:trackByIndex">
-                        <div [(ngModel)]="notes[index]" [class.starred]="starredNotesId == n.id">
-                            <h3>{{n.employee.name}}'s Notes - {{n.timesStarred}} times starred - </h3>
-                            <div class="input" role="textbox" [class.disabled]="n.employee.id != userId">{{n.content}}</div>
-                            <button (click)=updateNotes(n) [class.hidden]="n.employee.id != userId">Save</button>
+                        <div [(ngModel)]="notes[index]" ngDefaultControl>
+                            <h3>{{n.employee.name}}'s Notes</h3>
+                            <div *ngIf="n.employee.id != userId">{{n.content}}</div>
+                            <textarea *ngIf="n.employee.id == userId" style="width:100%">{{n.content}}</textarea><br>
+                            <button *ngIf="n.employee.id == userId" (click)=updateNotes(n)>Save</button>
                         </div>
                     </li>
                 </ul>
