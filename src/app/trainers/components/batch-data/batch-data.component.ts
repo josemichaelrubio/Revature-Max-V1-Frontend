@@ -28,8 +28,6 @@ export class BatchDataComponent implements OnInit {
         this.quizAvgDataSet.push(quizAvg.averageScore);
         this.quizLabels.push(quizAvg.quizName);
       }
-
-      this.quizAvgDataSet.push(50, 100);
   
       for(let compAvg of this.averages.competencyAverage){
         this.topicCompAvgDataSet.push(compAvg.averageCompetency);

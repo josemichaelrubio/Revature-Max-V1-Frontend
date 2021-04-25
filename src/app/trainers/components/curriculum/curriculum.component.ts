@@ -1,8 +1,10 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CalendarOptions, DateSelectArg, EventApi, EventClickArg, EventSourceInput } from '@fullcalendar/angular';
+import { CalendarOptions } from '@fullcalendar/angular';
 import { Curriculum } from 'app/models/curriculum';
+import { Tag } from 'app/models/tag';
+import { Topic } from 'app/models/topic';
 import { CurriculumService } from 'app/services/curriculum.service';
 import { TopicService } from 'app/services/topic.service';
 
@@ -17,10 +19,18 @@ export class CurriculumComponent implements OnInit {
   showEditButton: boolean = false;
   curriculum: Curriculum[] = [];
   formData!: FormGroup;
+  formRemoveData!: FormGroup;
   day!:string;
   topicTitle!: string;
+  tagList: Tag[] = [];
+  topicList: Topic[] = [];
+  tagIdBind!: string;
+  topicNameClick!: string;
+  topicIdClick!: string;
+  topicTagId!: string;
+
   events = [
-    { title: 'Start Date', date: '2021-03-01' }
+    { id: "0", title: 'Start Date', date: '2021-03-01', tag: "0" }
   ];
 
   @ViewChild("content") private contentRef!: TemplateRef<Object>;
@@ -31,7 +41,7 @@ export class CurriculumComponent implements OnInit {
       for(let curDay of this.curriculum){
         if(curDay.topics!=null){
           for(let topic of curDay.topics){
-          this.events.push({ title: topic.name, date: curDay.date});
+          this.events.push({ id: `${topic.id}`, title: topic.name, date: curDay.date, tag: `${topic.tag.id}`});
           }
           
         }
@@ -41,14 +51,20 @@ export class CurriculumComponent implements OnInit {
     },
     (err)=>console.log(err),
     ()=>{
-      console.log(this.curriculum);
+      console.log('yay curriculum');
     });
+
+    topicService.getAllTopics().subscribe((data)=>this.topicList=data);
    }
 
   ngOnInit(): void {
     this.formData = new FormGroup({
       topicName: new FormControl("Topic"),
       eventDay: new FormControl("Day")
+    });
+    this.formRemoveData = new FormGroup({
+      topicName: new FormControl(this.topicNameClick),
+      topicId: new FormControl(this.topicIdClick)
     });
   }
   handleDateClick(arg: any) {
@@ -71,7 +87,22 @@ export class CurriculumComponent implements OnInit {
   }
 
   handleEventClick(arg:any){
+    this.topicIdClick = arg.event._def.sourceId;
+    this.topicNameClick = arg.event._def.title;
+    this.topicTagId = arg.event._def.extendedProps.tag;
+  }
 
+  loadTags(){
+    this.topicService.getAllTags().subscribe((data)=>this.tagList = data);}
+
+  loadTopics(){
+    this.topicService.getAllTopics().subscribe((data)=>this.topicList = data);
+
+  }
+
+
+  saveTopic(topic:any){
+    this.topicIdClick = topic.id;
   }
   
 }
