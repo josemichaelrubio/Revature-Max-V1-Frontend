@@ -2,40 +2,40 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TopicDTO } from '../models/topic-dto'
-import { Notes } from '../models/notes'
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TopicService {
 
-  private hostURL: string = 'http://localhost:80';
   selectedTopicId: number = 0;
 
   constructor(private http: HttpClient) {}
 
-  httpOptions = {headers: new HttpHeaders({"Authorization": 'eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2MTkxMjgxMTQsImp0aSI6IjE2Iiwic3ViIjoiSU5TVFJVQ1RPUiJ9.KC_SPkpPJR6ah1Yv1-AWu6JmJX2qy2Ur92ob3bWRoQdcEFhO9oSWxcAUyKVWtdChrza61eQNKMKbLJkxhWM1KA'})};
-
   getTopicDTO(): Observable<TopicDTO> {
-    let batchId = 1; //sessionStorage.getItem("userBatchId");
-    let headers = new HttpHeaders();
-    headers.set('Authorization', 'eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2MTkxMjgxMTQsImp0aSI6IjE2Iiwic3ViIjoiSU5TVFJVQ1RPUiJ9.KC_SPkpPJR6ah1Yv1-AWu6JmJX2qy2Ur92ob3bWRoQdcEFhO9oSWxcAUyKVWtdChrza61eQNKMKbLJkxhWM1KA'); //sessionStorage.getItem('token') || '');
-    return this.http.get<TopicDTO>(`${this.hostURL}/batches/${batchId}/topics/${this.selectedTopicId}`, this.httpOptions);
-  }
-
-  setEmployeeTopic(employeeTopic: string) {
-    let user = JSON.parse(sessionStorage.getItem('user') || '');
+    let batchId = sessionStorage.getItem("userBatchId");
     let headers = new HttpHeaders();
     headers.set('Authorization', sessionStorage.getItem('token') || '');
-    this.http.put(`${this.hostURL}/employees/${user.id}/topics/${this.selectedTopicId}`, employeeTopic,
+    return this.http.get<TopicDTO>(environment.baseUrl+`/batches/${batchId}/topics/${this.selectedTopicId}`,
       { headers: headers });
   }
 
-  setNotes(notes: string) {
+  setEmployeeTopic(employeeTopic: string) : Observable<any> {
     let user = JSON.parse(sessionStorage.getItem('user') || '');
     let headers = new HttpHeaders();
     headers.set('Authorization', sessionStorage.getItem('token') || '');
-    this.http.put(`${this.hostURL}/employees/${user.id}/notes`, notes, { headers: headers });
+    headers.set('Content-Type', 'application/json');
+    return this.http.put(environment.baseUrl+`/employees/${user.id}/topics/${this.selectedTopicId}`, employeeTopic,
+      { headers: headers });
+  }
+
+  setNotes(notes: string) : Observable<any> {
+    let user = JSON.parse(sessionStorage.getItem('user') || '');
+    let headers = new HttpHeaders();
+    headers.set('Authorization', sessionStorage.getItem('token') || '');
+    headers.set('Content-Type', 'application/json');
+    return this.http.put(environment.baseUrl+`/employees/${user.id}/notes`, notes, { headers: headers });
   }
 
 }
