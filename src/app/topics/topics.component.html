@@ -5,10 +5,11 @@
         [ngModelOptions]="{updateOn: 'blur'}" />
     </p>
     <ul>
-        <li *ngFor="let n of notes">
-            <div [class.starred]="starredNotesId == n.id">
-                <h3>{{n.employee.name}}'s Notes - {{n.timesStarred}} times starred</h3>
-                <div class="input" role="textbox" [class.disabled]="n.employee.id != userId" >{{n.content}}</div>
+        <li *ngFor="let n of notes; let index = index; trackBy:trackByIndex">
+            <div [(ngModel)]="notes[index]" [class.starred]="starredNotesId == n.id">
+                <h3>{{n.employee.name}}'s Notes - {{n.timesStarred}} times starred - </h3>
+                <div class="input" role="textbox" [class.disabled]="n.employee.id != userId">{{n.content}}</div>
+                <button (click)=updateNotes(n) [class.hidden]="n.employee.id != userId">Save</button>
             </div>
         </li>
     </ul>
