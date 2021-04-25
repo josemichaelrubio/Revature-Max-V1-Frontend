@@ -3,13 +3,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TopicDTO } from '../models/topic-dto'
 import { Notes } from '../models/notes'
+import { environment } from 'environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TopicService {
 
-  private hostURL: string = 'http://localhost:80';
+  private hostURL: string = environment.baseUrl;
   selectedTopicId: number = 0;
 
   constructor(private http: HttpClient) {}

@@ -32,4 +32,9 @@ export class GroupDataService {
     return this.http.post<User[]>(this.batchAssociatesUrl, associates, this.httpOptions);
   }
 
+  removeAssociate(associate: User): Observable<any>{
+    return this.http.delete<any>(this.batchAssociatesUrl+`/${associate.id}`, this.httpOptions);
+  }
+
+
 }
