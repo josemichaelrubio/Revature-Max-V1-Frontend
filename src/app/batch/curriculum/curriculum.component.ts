@@ -1,7 +1,7 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CalendarOptions, DateSelectArg, EventApi, EventClickArg, EventSourceInput } from '@fullcalendar/angular';
+import { CalendarOptions } from '@fullcalendar/common';
 import { Curriculum } from 'app/models/curriculum';
 import { CurriculumService } from 'app/services/curriculum.service';
 import { TopicService } from 'app/services/topic.service';
@@ -20,10 +20,8 @@ export class CurriculumComponent implements OnInit {
   day!:string;
   topicTitle!: string;
   events = [
-    { title: 'Start Date', date: '2021-03-01' }
+    { id: '0', title: 'Start Date', date: '2021-03-01' }
   ];
-
-  @ViewChild("content") private contentRef!: TemplateRef<Object>;
 
   constructor(private topicService: TopicService, private router: Router, private curriculumService: CurriculumService) {
     curriculumService.getCurriculumDays().subscribe((data)=>{
@@ -31,7 +29,7 @@ export class CurriculumComponent implements OnInit {
       for(let curDay of this.curriculum){
         if(curDay.topics!=null){
           for(let topic of curDay.topics){
-          this.events.push({ title: topic.name, date: curDay.date});
+          this.events.push({ id: `${topic.id}`, title: topic.name, date: curDay.date});
           }
           
         }
@@ -60,7 +58,6 @@ export class CurriculumComponent implements OnInit {
     initialView: 'dayGridMonth',
     dateClick: this.handleDateClick.bind(this), // bind is important!
     eventClick: this.handleEventClick.bind(this),
-    editable: true,
     selectable: true,
     selectMirror: true,
     weekends: false // initial value
@@ -71,7 +68,14 @@ export class CurriculumComponent implements OnInit {
   }
 
   handleEventClick(arg:any){
-
+    console.log(arg);
+    this.topicService.selectedTopicId = +(arg.event._def.publicId);
+    this.router.navigateByUrl("/topics");
   }
-  
+
+  checkTopicOne(){
+    this.topicService.selectedTopicId = 1;
+    this.router.navigateByUrl("/topics");
+  }
+
 }

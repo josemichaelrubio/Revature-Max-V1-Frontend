@@ -56,7 +56,13 @@ export class InviteComponent implements OnInit {
     this.editorOpened = true;
   }
   
-
+  removeEmp(emp:User){
+    console.log("removing associate from batch");
+    this.groupData.removeAssociate(emp).subscribe(()=>console.log("removing associate from batch"), ()=>console.log("Some Error"),
+     ()=>this.groupData.getAllAssociates().subscribe((usersReturned)=>this.associates=usersReturned,
+        (err)=>{this.errorMessage = "Could not find any associates for your assigned batch!"})
+    );
+  }
   
 
 }

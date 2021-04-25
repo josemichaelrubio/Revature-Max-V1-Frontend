@@ -1,0 +1,12 @@
+html,
+body,
+header,
+#intro {
+	height: 100%;
+}
+
+.cal{
+	background: white;
+	border-radius: 1em;
+	padding: 5%;
+}
