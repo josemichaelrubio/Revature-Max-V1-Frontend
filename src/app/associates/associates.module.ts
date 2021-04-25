@@ -6,18 +6,22 @@ import { AssociatesComponent } from './associates.component';
 import { SidenavModule } from '../sidenav/sidenav.module';
 import { CompetenciesComponent } from './competencies/competencies.component';
 import { FormsModule } from '@angular/forms';
+import { AssociateLandingComponent } from './associate-landing/associate-landing.component';
+import { ChartsModule } from 'ng2-charts';
 
 
 @NgModule({
   declarations: [
     AssociatesComponent,
-    CompetenciesComponent
+    CompetenciesComponent,
+    AssociateLandingComponent
   ],
   imports: [
     CommonModule,
     AssociatesRoutingModule,
     SidenavModule,
-    FormsModule
+    FormsModule,
+    ChartsModule
   ],
   exports: [
   	AssociatesComponent,

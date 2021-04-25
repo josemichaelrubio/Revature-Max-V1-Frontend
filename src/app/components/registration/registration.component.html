@@ -14,7 +14,7 @@
       <label for="inputPassword" class="sr-only">Password</label>
       <input type="password" id="inputPassword" name="password" [(ngModel)]="password" class="form-control" placeholder="Password" required="">
 
-      <button class="btn btn-lg btn-primary btn-block" type="submit" (click)="newEmployee()" >Register</button> <!--eventBinding-->
+      <button class="btn btn-outline-light btn-lg btn-block" type="submit" (click)="newEmployee()" >Register</button> <!--eventBinding-->
       <div *ngIf="message">{{message}}</div>
   </form>
 </div>

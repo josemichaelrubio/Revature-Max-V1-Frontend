@@ -2,6 +2,7 @@ import { LoginResponse } from './../../models/login-response';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavChangeService } from 'app/services/nav-change.service';
+import { User } from 'app/models/user';
 
 @Component({
   selector: 'app-nav',
@@ -10,9 +11,11 @@ import { NavChangeService } from 'app/services/nav-change.service';
 })
 export class NavComponent implements OnInit {
 
+ 
   repsonse!: LoginResponse;
   isLoggedIn = false;
   isLoggedOut= false;
+
 
 
   isTrainer = false;
@@ -30,7 +33,7 @@ export class NavComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
   }
 
   logOut(){

@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
 
       sessionStorage.setItem("token",this.response.token);
       sessionStorage.setItem("user", JSON.stringify(this.response.user));
-      sessionStorage.setItem("userBatchId", this.response.userBatchId.toString());
+
 
       console.log("changing navbar state");
       this.nav.setNavbarState(true);
@@ -41,6 +41,7 @@ export class LoginComponent implements OnInit {
       if(this.response.userBatchId== null){
         this.router.navigateByUrl("associates");
       }
+      sessionStorage.setItem("userBatchId", this.response.userBatchId.toString());
       if(this.response.user.role == "INSTRUCTOR"){
         this.router.navigateByUrl("trainers");
       }else{
