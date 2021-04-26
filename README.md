@@ -6,7 +6,7 @@ A streamlined training web service, acting as an extension of the Revature Pro f
 
 ## Technologies Used
 
-* Visual Studio Code (back end IDE)
+* Visual Studio Code
 * Git Bash 2.30.1
 * GitLab
 * Angular 11.2.9
