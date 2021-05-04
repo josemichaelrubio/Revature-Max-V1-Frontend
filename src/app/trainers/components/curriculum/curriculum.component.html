@@ -25,13 +25,13 @@
                 <br>
                 <div>
                     <form [formGroup]="formData">
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Choose Topic Tag</option>
-                            <option *ngFor="let tag of tagList" (change)="loadTopics()">{{tag.name}}</option>
+                        <select [(ngModel)]="techId" (ngModelChange)="loadTopics()"class="form-select" aria-label="Default select example">
+                            <option selected>Choose Tech</option>
+                            <option *ngFor="let tag of tagList" [ngValue]="tag.id">{{tag.name}}</option>
                         </select>
                         <select class="form-select" aria-label="Default select example">
                             <option selected>Choose Topic</option>
-                            <option *ngFor="let topic of topicList">{{topic.name}}</option>
+                            <option *ngFor="let topic of topicList ">{{topic.name}}</option>
                           </select>
                     </form>
                     
