@@ -2,13 +2,14 @@ import { taggedTemplate } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CalendarOptions } from '@fullcalendar/angular';
+import { Calendar, CalendarOptions } from '@fullcalendar/angular';
 import { Curriculum } from 'app/models/curriculum';
 import { Tag } from 'app/models/tag';
 import { Topic } from 'app/models/topic';
 import { CurriculumService } from 'app/services/curriculum.service';
 import { TopicService } from 'app/services/topic.service';
 import { filter } from 'rxjs/operators';
+import * as jquery from 'jquery';
 
 @Component({
   selector: 'app-curriculum',
@@ -119,8 +120,38 @@ export class CurriculumComponent implements OnInit {
   addTopic(val: any) {
     console.log(val.target[0].value);
     console.log(val.target[1].value);
+    const techId = val.target[0].value;
+    const topicId = val.target[1].value;
     // add topic to the calendar at this.day
-    // const topicToAdd:Topic = this.fullTopicList.find()
+    const topicToAdd: Topic | undefined = this.fullTopicList.find(
+      (topic) => topic.id == topicId
+    );
+    console.log('add');
+    console.log(topicToAdd);
+    console.log('to day');
+    console.log(this.day);
+
+    if (!topicToAdd) {
+      return;
+    }
+    // add to this.curriculum appropriate day
+    this.curriculum
+      .find((curriculum) => curriculum.date == this.day)
+      ?.topics.push(topicToAdd);
+    console.log(this.curriculum);
+
+    // add to the calendar
+    this.events.push({
+      id: `${topicToAdd.id}`,
+      title: topicToAdd.name,
+      date: this.day,
+      tag: `${topicToAdd.tag.id}`,
+    });
+    this.calendarOptions.events = this.events;
+    console.log(this.events);
+    // (<any>$('#calendar')).fullCalendar('renderEvents', this.events, true);
+    console.log($('#calendar'));
+    (<any>$('#calendar')).fullCalendar('refetchEvents');
   }
 
   saveTopic(topic: any) {
