@@ -2,8 +2,8 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CalendarOptions } from '@fullcalendar/angular';
-import { Curriculum } from 'app/models/curriculum';
-import { Tag } from 'app/models/tag';
+import { BatchDay } from 'app/models/batch-day';
+import { Tech } from 'app/models/tech';
 import { Topic } from 'app/models/topic';
 import { CurriculumService } from 'app/services/curriculum.service';
 import { TopicService } from 'app/services/topic.service';
@@ -16,19 +16,19 @@ import { TopicService } from 'app/services/topic.service';
 export class CurriculumComponent implements OnInit {
   showDayModal: boolean = false;
   showEditButton: boolean = false;
-  curriculum: Curriculum[] = [];
+  batchDays: BatchDay[] = [];
   formData!: FormGroup;
   formRemoveData!: FormGroup;
   day!: string;
   topicTitle!: string;
-  tagList: Tag[] = [];
+  techList: Tech[] = [];
   topicList: Topic[] = [];
   tagIdBind!: string;
   topicNameClick!: string;
   topicIdClick!: string;
   topicTagId!: string;
 
-  events = [{ id: '0', title: 'Start Date', date: '2021-03-01', tag: '0' }];
+  events = [{ id: '0', title: 'Start Date', date: '2021-03-01', tech: '0' }];
 
   @ViewChild('content') private contentRef!: TemplateRef<Object>;
 
@@ -37,17 +37,17 @@ export class CurriculumComponent implements OnInit {
     private router: Router,
     private curriculumService: CurriculumService
   ) {
-    curriculumService.getCurriculumDays().subscribe(
+    curriculumService.getBatchDays().subscribe(
       (data) => {
-        this.curriculum = data;
-        for (let curDay of this.curriculum) {
+        this.batchDays = data;
+        for (let curDay of this.batchDays) {
           if (curDay.topics != null) {
             for (let topic of curDay.topics) {
               this.events.push({
                 id: `${topic.id}`,
                 title: topic.name,
                 date: curDay.date,
-                tag: `${topic.tag.id}`,
+                tech: `${topic.tech.id}`,
               });
             }
           }
@@ -97,22 +97,22 @@ export class CurriculumComponent implements OnInit {
     this.topicIdClick = arg.event._def.sourceId;
     this.topicNameClick = arg.event._def.title;
     this.topicTagId = arg.event._def.extendedProps.tag;
-    console.log(this.curriculum);
+    console.log(this.batchDays);
   }
 
   /**
-   * Updates this.curriculum when a topic is moved from one day to another
+   * Updates this.batchDays when a topic is moved from one day to another
    * @param arg
    * @returns
    */
   handleEventDrop(arg: any) {
     // get the days the topic is moved from / to
-    const initDay: Curriculum | undefined = this.curriculum.find(
+    const initDay: BatchDay | undefined = this.batchDays.find(
       (curr) =>
         curr.date ==
         arg.oldEvent._instance.range.start.toISOString().split('T')[0]
     );
-    const destDay: Curriculum | undefined = this.curriculum.find((curr) => {
+    const destDay: BatchDay | undefined = this.batchDays.find((curr) => {
       return (
         curr.date == arg.event._instance.range.start.toISOString().split('T')[0]
       );
@@ -137,8 +137,8 @@ export class CurriculumComponent implements OnInit {
     // Can add this when getting backend requets set up
   }
 
-  loadTags() {
-    this.topicService.getAllTags().subscribe((data) => (this.tagList = data));
+  loadTechs() {
+    this.topicService.getAllTags().subscribe((data) => (this.techList = data));
   }
 
   loadTopics() {
