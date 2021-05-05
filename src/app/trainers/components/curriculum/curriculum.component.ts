@@ -91,6 +91,7 @@ export class CurriculumComponent implements OnInit {
     initialView: 'dayGridMonth',
     dateClick: this.handleDateClick.bind(this), // bind is important!
     eventClick: this.handleEventClick.bind(this),
+    eventDrop: this.handleEventDrop.bind(this),
     editable: true,
     selectable: true,
     selectMirror: true,
@@ -147,8 +148,8 @@ export class CurriculumComponent implements OnInit {
     );
     destDay?.topics.push(movedTopic);
 
-    // console.log(initDay?.topics);
-    // console.log(destDay?.topics);
+    console.log(initDay?.topics);
+    console.log(destDay?.topics);
 
     // TODO: Mark what days are updated so when we save changes it keeps the number of requests to a minimum
     // Can add this when getting backend requets set up
@@ -157,7 +158,7 @@ export class CurriculumComponent implements OnInit {
   addTopic(val: any) {
     console.log(val.target[0].value);
     console.log(val.target[1].value);
-    const techId = val.target[0].value;
+    // const techId = val.target[0].value;
     const topicId = val.target[1].value;
     // add topic to the calendar at this.day
     const topicToAdd: Topic | undefined = this.fullTopicList.find(
