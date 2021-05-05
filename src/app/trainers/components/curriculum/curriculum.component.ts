@@ -10,6 +10,7 @@ import { CurriculumService } from 'app/services/curriculum.service';
 import { TopicService } from 'app/services/topic.service';
 import { filter } from 'rxjs/operators';
 import * as jquery from 'jquery';
+import { Quiz } from 'app/models/quiz';
 
 @Component({
   selector: 'app-curriculum',
@@ -53,7 +54,21 @@ export class CurriculumComponent implements OnInit {
                 date: curDay.date,
                 tag: `${topic.tag.id}`,
               });
+
+              if (topic.name == 'Annotations') console.log(topic);
             }
+          }
+          // add quiz / qc
+          if (curDay.quizzes.length > 0) {
+            console.log(
+              `Day ${curDay.date} has a quiz ${curDay.quizzes[0].name}`
+            );
+            this.events.push({
+              id: `${curDay.quizzes[0].id}`,
+              title: curDay.quizzes[0].name,
+              date: curDay.date,
+              tag: '-1',
+            });
           }
         }
         this.calendarOptions.events = this.events;
@@ -130,26 +145,40 @@ export class CurriculumComponent implements OnInit {
         curr.date ==
         arg.oldEvent._instance.range.start.toISOString().split('T')[0]
     );
-    const destDay: Curriculum | undefined = this.curriculum.find((curr) => {
-      return (
+    console.log(initDay);
+    const destDay: Curriculum | undefined = this.curriculum.find(
+      (curr) =>
         curr.date == arg.event._instance.range.start.toISOString().split('T')[0]
-      );
-    });
-
-    // Move topic from initDay to destDay
-    const movedTopic: Topic | undefined = initDay?.topics.find(
-      (topic) => topic.name == arg.event._def.title
     );
-    if (!movedTopic) {
+    console.log(destDay);
+
+    if (!initDay || !destDay) {
+      console.error('initDay or destDay undefined');
       return;
     }
-    initDay?.topics.splice(
-      initDay.topics.findIndex((e) => e.id == movedTopic.id)
-    );
-    destDay?.topics.push(movedTopic);
 
-    console.log(initDay?.topics);
-    console.log(destDay?.topics);
+    // move topic or quiz in curriculum[]
+    if (arg.event._def.extendedProps.tag == '-1') {
+      const movedQuiz: Quiz = initDay?.quizzes[0];
+      console.log(movedQuiz);
+
+      initDay.quizzes = [];
+      destDay.quizzes[0] = movedQuiz;
+    } else {
+      const movedTopic: Topic | undefined = initDay?.topics.find(
+        (topic) => topic.name == arg.event._def.title
+      );
+      if (!movedTopic) {
+        return;
+      }
+      initDay?.topics.splice(
+        initDay.topics.findIndex((e) => e.id == movedTopic.id)
+      );
+      destDay?.topics.push(movedTopic);
+    }
+
+    // console.log(initDay);
+    // console.log(destDay);
 
     // TODO: Mark what days are updated so when we save changes it keeps the number of requests to a minimum
     // Can add this when getting backend requets set up
@@ -178,18 +207,35 @@ export class CurriculumComponent implements OnInit {
       ?.topics.push(topicToAdd);
     console.log(this.curriculum);
 
-    // add to the calendar
+    // // add to the calendar
+    // this.events.push({
+    //   id: `${topicToAdd.id}`,
+    //   title: topicToAdd.name,
+    //   date: this.day,
+    //   tag: `${topicToAdd.tag.id}`,
+    // });
+    // this.calendarOptions.events = this.events;
+    // console.log(this.events);
+    // // (<any>$('#calendar')).fullCalendar('renderEvents', this.events, true);
+    // console.log($('#calendar'));
+    // (<any>$('#calendar')).fullCalendar('refetchEvents');
+
+    let newEvents = [];
+    this.events.forEach((event) => newEvents.push(event));
+    newEvents.push({
+      id: `${topicToAdd.id}`,
+      title: topicToAdd.name,
+      date: this.day,
+      tag: `${topicToAdd.tag.id}`,
+    });
     this.events.push({
       id: `${topicToAdd.id}`,
       title: topicToAdd.name,
       date: this.day,
       tag: `${topicToAdd.tag.id}`,
     });
-    this.calendarOptions.events = this.events;
-    console.log(this.events);
-    // (<any>$('#calendar')).fullCalendar('renderEvents', this.events, true);
-    console.log($('#calendar'));
-    (<any>$('#calendar')).fullCalendar('refetchEvents');
+    this.calendarOptions.events = newEvents;
+    console.log(newEvents);
   }
 
   saveTopic(topic: any) {
