@@ -32,6 +32,7 @@ export class CurriculumComponent implements OnInit {
   topicNameClick!: string;
   topicIdClick!: string;
   topicTagId!: string;
+  quizList: Quiz[] = [];
 
   events = [{ id: '0', title: 'Start Date', date: '2021-03-01', tag: '0' }];
 
@@ -62,7 +63,7 @@ export class CurriculumComponent implements OnInit {
               id: `${curDay.quizzes[0].id}`,
               title: curDay.quizzes[0].name,
               date: curDay.date,
-              tag: '-1',
+              tag: 'quiz',
             });
           }
         }
@@ -128,6 +129,17 @@ export class CurriculumComponent implements OnInit {
     );
   }
 
+  loadQuizzes() {
+    // new backend has an endpoint for quizzes, so we'd just do a service call here.
+    // for old backend I'll just grab from curriculum[]
+    this.quizList = [];
+    this.curriculum.forEach((curriculum) => {
+      if (curriculum.quizzes.length > 0) {
+        this.quizList.push(curriculum.quizzes[0]);
+      }
+    });
+  }
+
   /**
    * Updates this.curriculum when a topic is moved from one day to another
    * @param arg
@@ -135,23 +147,31 @@ export class CurriculumComponent implements OnInit {
    */
   handleEventDrop(arg: any) {
     // get the days the topic is moved from / to
+    const initDate = arg.oldEvent._instance.range.start
+      .toISOString()
+      .split('T')[0];
+    const destDate = arg.event._instance.range.start
+      .toISOString()
+      .split('T')[0];
     const initDay: Curriculum | undefined = this.curriculum.find(
-      (curr) =>
-        curr.date ==
-        arg.oldEvent._instance.range.start.toISOString().split('T')[0]
+      (curr) => curr.date == initDate
     );
-    const destDay: Curriculum | undefined = this.curriculum.find(
-      (curr) =>
-        curr.date == arg.event._instance.range.start.toISOString().split('T')[0]
+    let destDay: Curriculum | undefined = this.curriculum.find(
+      (curr) => curr.date == destDate
     );
 
-    if (!initDay || !destDay) {
-      console.error('initDay or destDay undefined');
+    if (!initDay) {
+      console.error('initDay undefined');
       return;
     }
 
+    if (!destDay) {
+      destDay = new Curriculum(-1, destDate, [], []);
+      this.curriculum.push(destDay);
+    }
+
     // move topic or quiz in curriculum[]
-    if (arg.event._def.extendedProps.tag == '-1') {
+    if (arg.event._def.extendedProps.tag == 'quiz') {
       const movedQuiz: Quiz = initDay?.quizzes[0];
       initDay.quizzes = [];
       destDay.quizzes[0] = movedQuiz;
@@ -168,6 +188,10 @@ export class CurriculumComponent implements OnInit {
       destDay?.topics.push(movedTopic);
     }
 
+    console.log(initDay);
+
+    console.log(destDay);
+
     // TODO: Mark what days are updated so when we save changes it keeps the number of requests to a minimum
     // Can add this when getting backend requets set up
   }
@@ -183,10 +207,14 @@ export class CurriculumComponent implements OnInit {
     if (!topicToAdd) {
       return;
     }
-    // add to this.curriculum appropriate day
-    this.curriculum
-      .find((curriculum) => curriculum.date == this.day)
-      ?.topics.push(topicToAdd);
+    // add to this.curriculum appropriate day (create one if necessary)
+    let destDay = this.curriculum.find(
+      (curriculum) => curriculum.date == this.day
+    );
+    if (!destDay) {
+      destDay = new Curriculum(-1, this.day, [], []);
+    }
+    destDay.topics.push(topicToAdd);
 
     /*
       Refresh the calendar
@@ -208,6 +236,48 @@ export class CurriculumComponent implements OnInit {
       tag: `${topicToAdd.tag.id}`,
     });
     this.calendarOptions.events = newEvents;
+
+    console.log(destDay);
+  }
+
+  addQuiz(arg: any) {
+    console.log(arg);
+
+    const quizId = arg.target[0].value;
+    const quizToAdd: Quiz | undefined = this.quizList.find(
+      (quiz) => quiz.id == quizId
+    );
+    console.log(quizToAdd);
+
+    // add to this.curriculum appropiate day
+    let batchDay = this.curriculum.find((curr) => curr.date == this.day);
+    if (!batchDay) {
+      batchDay = new Curriculum(-1, this.day, [], []);
+    }
+    if (batchDay.quizzes.length > 0 || !quizToAdd) {
+      return;
+    }
+    batchDay.quizzes[0] = quizToAdd;
+
+    // Refresh the calendar
+    // Refer to above method (addTopic) for why I don't like this but it's here anyway
+    let newEvents = [];
+    this.events.forEach((event) => newEvents.push(event));
+    newEvents.push({
+      id: `${quizToAdd.id}`,
+      title: quizToAdd.name,
+      date: this.day,
+      tag: `quiz`,
+    });
+    this.events.push({
+      id: `${quizToAdd.id}`,
+      title: quizToAdd.name,
+      date: this.day,
+      tag: `quiz`,
+    });
+    this.calendarOptions.events = newEvents;
+
+    console.log(batchDay);
   }
 
   saveTopic(topic: any) {
