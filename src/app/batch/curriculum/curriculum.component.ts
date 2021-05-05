@@ -38,6 +38,14 @@ export class CurriculumComponent implements OnInit {
               });
             }
           }
+          // add quiz / qc
+          if (curDay.quiz) {
+            this.events.push({
+              id: `${curDay.quiz.id}`,
+              title: curDay.quiz.name,
+              date: curDay.date,
+            });
+          }
         }
         this.calendarOptions.events = this.events;
       },

@@ -16,7 +16,7 @@
     >Remove Topic Event</a
   >
   <br /><br />
-  <full-calendar [options]="calendarOptions"></full-calendar>
+  <full-calendar id="calendar" [options]="calendarOptions"></full-calendar>
   <br /><br />
 </div>
 
@@ -43,33 +43,41 @@
         </button>
       </div>
       <div class="modal-body">
-        <div class="form-group">
-          <label class="control-label">Adding Topic to Curriculum</label>
-          <h3>{{ day }}</h3>
-          <br />
-          <div>
-            <form [formGroup]="formData">
-              <select class="form-select" aria-label="Default select example">
+        <form (submit)="addTopic($event)">
+          <div class="form-group">
+            <label class="control-label">Adding Topic to Curriculum</label>
+            <h3>{{ day }}</h3>
+            <br />
+            <div>
+              <select
+                (change)="loadTopics($event.target)"
+                class="form-select"
+                aria-label="Default select example"
+              >
                 <option selected>Choose Tech</option>
-                <option *ngFor="let tech of techList" (change)="loadTopics()">
+                <option *ngFor="let tech of techList" value="{{ tech.id }}">
                   {{ tech.name }}
                 </option>
               </select>
               <select class="form-select" aria-label="Default select example">
                 <option selected>Choose Topic</option>
-                <option *ngFor="let topic of topicList">
+                <option *ngFor="let topic of topicList" value="{{ topic.id }}">
                   {{ topic.name }}
                 </option>
               </select>
-            </form>
+            </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">
-            Close
-          </button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
