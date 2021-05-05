@@ -117,6 +117,43 @@ export class CurriculumComponent implements OnInit {
     );
   }
 
+  /**
+   * Updates this.curriculum when a topic is moved from one day to another
+   * @param arg
+   * @returns
+   */
+  handleEventDrop(arg: any) {
+    // get the days the topic is moved from / to
+    const initDay: Curriculum | undefined = this.curriculum.find(
+      (curr) =>
+        curr.date ==
+        arg.oldEvent._instance.range.start.toISOString().split('T')[0]
+    );
+    const destDay: Curriculum | undefined = this.curriculum.find((curr) => {
+      return (
+        curr.date == arg.event._instance.range.start.toISOString().split('T')[0]
+      );
+    });
+
+    // Move topic from initDay to destDay
+    const movedTopic: Topic | undefined = initDay?.topics.find(
+      (topic) => topic.name == arg.event._def.title
+    );
+    if (!movedTopic) {
+      return;
+    }
+    initDay?.topics.splice(
+      initDay.topics.findIndex((e) => e.id == movedTopic.id)
+    );
+    destDay?.topics.push(movedTopic);
+
+    // console.log(initDay?.topics);
+    // console.log(destDay?.topics);
+
+    // TODO: Mark what days are updated so when we save changes it keeps the number of requests to a minimum
+    // Can add this when getting backend requets set up
+  }
+
   addTopic(val: any) {
     console.log(val.target[0].value);
     console.log(val.target[1].value);
