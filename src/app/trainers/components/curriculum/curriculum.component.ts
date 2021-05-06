@@ -191,9 +191,16 @@ export class CurriculumComponent implements OnInit {
       destDay?.topics.push(movedTopic);
     }
 
-    console.log(initDay);
+    // console.log(initDay);
 
-    console.log(destDay);
+    // console.log(destDay);
+
+    // change this.events date
+    const movedEvent = this.events.find(
+      (event) => event.title == arg.event._def.title
+    );
+    if (!movedEvent) return;
+    movedEvent.date = destDate;
 
     // TODO: Mark what days are updated so when we save changes it keeps the number of requests to a minimum
     // Can add this when getting backend requets set up
@@ -288,27 +295,37 @@ export class CurriculumComponent implements OnInit {
   }
 
   removeTopic() {
-    const removedEvent = this.events.find((event) => event.title == this.topicNameClick);
+    const removedEvent = this.events.find(
+      (event) => event.title == this.topicNameClick
+    );
     if (removedEvent?.tag == '-1') {
       return;
     }
     let newEvents: any = [];
-    this.events.forEach(event => {
-      if (!(event.title == removedEvent?.title && event.date == removedEvent?.date)) {
+    this.events.forEach((event) => {
+      if (
+        !(
+          event.title == removedEvent?.title && event.date == removedEvent?.date
+        )
+      ) {
         newEvents.push(event);
       }
     });
     this.events = newEvents;
-    this.calendarOptions.events = this.events;
-    let curDay: Curriculum | undefined = this.curriculum
-      .find((curr) => curr.date == removedEvent?.date);
+    // this.calendarOptions.events = this.events;
+    this.calendarOptions.events = newEvents;
+    let curDay: Curriculum | undefined = this.curriculum.find(
+      (curr) => curr.date == removedEvent?.date
+    );
     if (curDay) {
       this.curriculum
         .find((curr) => curr.date == removedEvent?.date)
-        ?.topics.splice(curDay.topics.findIndex((e) => e.name == removedEvent?.title));
+        ?.topics.splice(
+          curDay.topics.findIndex((e) => e.name == removedEvent?.title)
+        );
     }
-    console.log('curDay events: ', curDay)
-    console.log('curriculum after removing: ', this.curriculum)
-    console.log('events: ', this.events)
-    }
+    console.log('curDay events: ', curDay);
+    console.log('curriculum after removing: ', this.curriculum);
+    console.log('events: ', this.events);
+  }
 }
