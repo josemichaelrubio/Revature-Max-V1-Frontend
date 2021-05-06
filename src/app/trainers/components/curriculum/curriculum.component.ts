@@ -55,15 +55,10 @@ export class CurriculumComponent implements OnInit {
                 date: curDay.date,
                 tag: `${topic.tag.id}`,
               });
-
-              if (topic.name == 'Annotations') console.log(topic);
             }
           }
           // add quiz / qc
           if (curDay.quizzes.length > 0) {
-            console.log(
-              `Day ${curDay.date} has a quiz ${curDay.quizzes[0].name}`
-            );
             this.events.push({
               id: `${curDay.quizzes[0].id}`,
               title: curDay.quizzes[0].name,
@@ -148,12 +143,10 @@ export class CurriculumComponent implements OnInit {
         curr.date ==
         arg.oldEvent._instance.range.start.toISOString().split('T')[0]
     );
-    console.log(initDay);
     const destDay: Curriculum | undefined = this.curriculum.find(
       (curr) =>
         curr.date == arg.event._instance.range.start.toISOString().split('T')[0]
     );
-    console.log(destDay);
 
     if (!initDay || !destDay) {
       console.error('initDay or destDay undefined');
@@ -163,8 +156,6 @@ export class CurriculumComponent implements OnInit {
     // move topic or quiz in curriculum[]
     if (arg.event._def.extendedProps.tag == '-1') {
       const movedQuiz: Quiz = initDay?.quizzes[0];
-      console.log(movedQuiz);
-
       initDay.quizzes = [];
       destDay.quizzes[0] = movedQuiz;
     } else {
@@ -180,26 +171,17 @@ export class CurriculumComponent implements OnInit {
       destDay?.topics.push(movedTopic);
     }
 
-    // console.log(initDay);
-    // console.log(destDay);
-
     // TODO: Mark what days are updated so when we save changes it keeps the number of requests to a minimum
     // Can add this when getting backend requets set up
   }
 
   addTopic(val: any) {
-    console.log(val.target[0].value);
-    console.log(val.target[1].value);
     // const techId = val.target[0].value;
     const topicId = val.target[1].value;
     // add topic to the calendar at this.day
     const topicToAdd: Topic | undefined = this.fullTopicList.find(
       (topic) => topic.id == topicId
     );
-    console.log('add');
-    console.log(topicToAdd);
-    console.log('to day');
-    console.log(this.day);
 
     if (!topicToAdd) {
       return;
@@ -208,21 +190,12 @@ export class CurriculumComponent implements OnInit {
     this.curriculum
       .find((curriculum) => curriculum.date == this.day)
       ?.topics.push(topicToAdd);
-    console.log(this.curriculum);
 
-    // // add to the calendar
-    // this.events.push({
-    //   id: `${topicToAdd.id}`,
-    //   title: topicToAdd.name,
-    //   date: this.day,
-    //   tag: `${topicToAdd.tag.id}`,
-    // });
-    // this.calendarOptions.events = this.events;
-    // console.log(this.events);
-    // // (<any>$('#calendar')).fullCalendar('renderEvents', this.events, true);
-    // console.log($('#calendar'));
-    // (<any>$('#calendar')).fullCalendar('refetchEvents');
-
+    /*
+      Refresh the calendar
+        When resetting calendarOptions.events, the assigned array must be a new array, or it doesn't
+        refresh the calendar. I'd like a more efficient option but the jquery calendar.fullCalender just wasn't working.
+    */
     let newEvents = [];
     this.events.forEach((event) => newEvents.push(event));
     newEvents.push({
@@ -238,7 +211,6 @@ export class CurriculumComponent implements OnInit {
       tag: `${topicToAdd.tag.id}`,
     });
     this.calendarOptions.events = newEvents;
-    console.log(newEvents);
   }
 
   saveTopic(topic: any) {
