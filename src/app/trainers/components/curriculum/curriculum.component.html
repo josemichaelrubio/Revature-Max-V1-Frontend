@@ -120,21 +120,39 @@
             <form [formGroup]="formRemoveData">
               <input
                 type="text"
+                hidden
                 class="form-control"
                 id="eventInput"
-                name="topic"
+                name="topicId"
+                value="{{ topicIdClick }}"
+                formControlName="topicId"
+              />
+              <input
+                type="text"
+                class="form-control"
+                id="eventInput"
+                name="topicName"
                 placeholder="{{ topicNameClick }}"
                 value="{{ topicNameClick }}"
                 formControlName="topicName"
               />
+              <input
+                type="text"
+                hidden
+                class="form-control"
+                id="eventInput"
+                name="topicDate"
+                value="{{ topicDateClick }}"
+                formControlName="topicDate"
+              />
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                  Close
+                </button>
+                <button type="submit" class="btn btn-primary" (click)="removeTopic()">Save changes</button>
+              </div>
             </form>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">
-            Close
-          </button>
-          <button type="button" class="btn btn-primary">Save changes</button>
         </div>
       </div>
     </div>
