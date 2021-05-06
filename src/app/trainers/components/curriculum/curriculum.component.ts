@@ -31,6 +31,7 @@ export class CurriculumComponent implements OnInit {
   tagIdBind!: string;
   topicNameClick!: string;
   topicIdClick!: string;
+  topicDateClick!: string;
   topicTagId!: string;
 
   events = [{ id: '0', title: 'Start Date', date: '2021-03-01', tag: '0' }];
@@ -75,7 +76,8 @@ export class CurriculumComponent implements OnInit {
       },
       (err) => console.log(err),
       () => {
-        console.log('yay curriculum');
+        console.log('yay curriculum: ', this.curriculum);
+        console.log('yay events: ', this.events);
       }
     );
 
@@ -95,6 +97,7 @@ export class CurriculumComponent implements OnInit {
     this.formRemoveData = new FormGroup({
       topicName: new FormControl(this.topicNameClick),
       topicId: new FormControl(this.topicIdClick),
+      topicDate: new FormControl(this.topicDateClick),
     });
   }
   handleDateClick(arg: any) {
@@ -241,4 +244,29 @@ export class CurriculumComponent implements OnInit {
   saveTopic(topic: any) {
     this.topicIdClick = topic.id;
   }
+
+  removeTopic() {
+    const removedEvent = this.events.find((event) => event.title == this.topicNameClick);
+    if (removedEvent?.tag == '-1') {
+      return;
+    }
+    let newEvents: any = [];
+    this.events.forEach(event => {
+      if (!(event.title == removedEvent?.title && event.date == removedEvent?.date)) {
+        newEvents.push(event);
+      }
+    });
+    this.events = newEvents;
+    this.calendarOptions.events = this.events;
+    let curDay: Curriculum | undefined = this.curriculum
+      .find((curr) => curr.date == removedEvent?.date);
+    if (curDay) {
+      this.curriculum
+        .find((curr) => curr.date == removedEvent?.date)
+        ?.topics.splice(curDay.topics.findIndex((e) => e.name == removedEvent?.title));
+    }
+    console.log('curDay events: ', curDay)
+    console.log('curriculum after removing: ', this.curriculum)
+    console.log('events: ', this.events)
+    }
 }
