@@ -169,8 +169,7 @@ export class CurriculumComponent implements OnInit {
     }
 
     if (!destDay) {
-      let batchId = sessionStorage.getItem('userBatchId');
-      if (!batchId) return;
+      let batchId = sessionStorage.getItem('userBatchId')!;
       destDay = new BatchDay(
         -1,
         +batchId,
