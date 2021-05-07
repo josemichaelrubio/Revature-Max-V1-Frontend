@@ -38,6 +38,7 @@ export class CurriculumComponent implements OnInit {
               });
             }
           }
+          console.log(curDay);////TESTING LOG
           // add quiz / qc
           if (curDay.quiz) {
             this.events.push({

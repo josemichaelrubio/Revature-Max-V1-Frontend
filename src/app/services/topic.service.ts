@@ -54,10 +54,20 @@ export class TopicService {
   }
 
   getAllTopics(): Observable<Topic[]> {
-    return this.http.get<Topic[]>(environment.baseUrl + `curriculum/topics`);
+    
+    let headers = new HttpHeaders({
+      Authorization: sessionStorage.getItem('token') || '',
+      'Content-Type': 'application/json',
+    });
+    return this.http.get<Topic[]>(environment.baseUrl + `curriculum/topics`,{headers:headers});
   }
 
   getAllTags(): Observable<Tech[]> {
-    return this.http.get<Tech[]>(environment.baseUrl + 'curriculum/techs');
+    
+    let headers = new HttpHeaders({
+      Authorization: sessionStorage.getItem('token') || '',
+      'Content-Type': 'application/json',
+    });
+    return this.http.get<Tech[]>(environment.baseUrl + 'curriculum/techs', {headers:headers});
   }
 }

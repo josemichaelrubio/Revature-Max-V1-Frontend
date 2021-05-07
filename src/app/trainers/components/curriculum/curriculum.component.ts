@@ -68,6 +68,16 @@ export class CurriculumComponent implements OnInit {
               tech: 'quiz',
             });
           }
+          if (curDay.qc) {
+            this.events.push({
+              id: `${curDay.qc.id}`,
+              title: curDay.qc.name,
+              date: curDay.date,
+              tech: 'QC',
+            });
+          }
+          console.log("day: ")
+          console.log(curDay)
         }
         this.calendarOptions.events = this.events;
       },
