@@ -183,7 +183,7 @@ export class CurriculumComponent implements OnInit {
     }
 
     // move topic or quiz in curriculum[]
-    if (arg.event._def.extendedProps.tag == 'quiz') {
+    if (arg.event._def.extendedProps.tech == 'quiz') {
       const movedQuiz: Quiz = initDay?.quiz;
       initDay.quiz = <Quiz>(<unknown>undefined);
       destDay.quiz = movedQuiz;
