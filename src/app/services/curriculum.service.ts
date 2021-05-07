@@ -5,22 +5,23 @@ import { Observable, Subject } from 'rxjs';
 import { EventInput } from '@fullcalendar/angular';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CurriculumService {
+  initialEvents: EventInput[] = [];
 
-  initialEvents: EventInput[]= [];
+  token: string = sessionStorage.getItem('token') || '';
 
-  token: string = sessionStorage.getItem("token") || '';
+  batchId: number = +(sessionStorage.getItem('userBatchId') || 1);
 
-  batchId: number = +(sessionStorage.getItem("userBatchId")||1);
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
+  httpOptions = { headers: new HttpHeaders({ Authorization: this.token }) };
 
-  httpOptions = {headers: new HttpHeaders({"Authorization": this.token})};
-
-  getCurriculumDays(): Observable<any>{
-    return this.http.get<any>(environment.baseUrl+`batches/${this.batchId}/curriculum`, this.httpOptions);
+  getBatchDays(): Observable<any> {
+    return this.http.get<any>(
+      environment.baseUrl + `batch-days?batch=${this.batchId}`,
+      this.httpOptions
+    );
   }
-
 }
