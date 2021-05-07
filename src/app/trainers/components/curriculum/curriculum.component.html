@@ -6,7 +6,7 @@
     class="btn btn-lg btn-outline-dark"
     data-toggle="modal"
     data-target="#exampleModalCenter"
-    (click)="loadTags()"
+    (click)="loadTechs()"
     >Add Topic Event</a
   >
   <a
@@ -62,8 +62,8 @@
                 aria-label="Default select example"
               >
                 <option selected>Choose Tech</option>
-                <option *ngFor="let tag of tagList" value="{{ tag.id }}">
-                  {{ tag.name }}
+                <option *ngFor="let tech of techList" value="{{ tech.id }}">
+                  {{ tech.name }}
                 </option>
               </select>
               <select class="form-select" aria-label="Default select example">
@@ -146,10 +146,20 @@
                 formControlName="topicDate"
               />
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-dismiss="modal"
+                >
                   Close
                 </button>
-                <button type="submit" class="btn btn-primary" (click)="removeTopic()">Save changes</button>
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  (click)="removeTopic()"
+                >
+                  Save changes
+                </button>
               </div>
             </form>
           </div>
