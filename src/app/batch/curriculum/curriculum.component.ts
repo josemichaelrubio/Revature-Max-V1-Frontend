@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CalendarOptions } from '@fullcalendar/common';
-import { Curriculum } from 'app/models/curriculum';
+import { BatchDay } from 'app/models/batch-day';
 import { CurriculumService } from 'app/services/curriculum.service';
 import { TopicService } from 'app/services/topic.service';
 
@@ -14,7 +14,7 @@ import { TopicService } from 'app/services/topic.service';
 export class CurriculumComponent implements OnInit {
   showDayModal: boolean = false;
   showEditButton: boolean = false;
-  curriculum: Curriculum[] = [];
+  batchDays: BatchDay[] = [];
   formData!: FormGroup;
   day!: string;
   topicTitle!: string;
@@ -25,10 +25,10 @@ export class CurriculumComponent implements OnInit {
     private router: Router,
     private curriculumService: CurriculumService
   ) {
-    curriculumService.getCurriculumDays().subscribe(
+    curriculumService.getBatchDays().subscribe(
       (data) => {
-        this.curriculum = data;
-        for (let curDay of this.curriculum) {
+        this.batchDays = data;
+        for (let curDay of this.batchDays) {
           if (curDay.topics != null) {
             for (let topic of curDay.topics) {
               this.events.push({
@@ -38,11 +38,12 @@ export class CurriculumComponent implements OnInit {
               });
             }
           }
+          console.log(curDay);////TESTING LOG
           // add quiz / qc
-          if (curDay.quizzes.length > 0) {
+          if (curDay.quiz) {
             this.events.push({
-              id: `${curDay.quizzes[0].id}`,
-              title: curDay.quizzes[0].name,
+              id: `${curDay.quiz.id}`,
+              title: curDay.quiz.name,
               date: curDay.date,
             });
           }
@@ -51,7 +52,7 @@ export class CurriculumComponent implements OnInit {
       },
       (err) => console.log(err),
       () => {
-        console.log(this.curriculum);
+        console.log(this.batchDays);
       }
     );
   }

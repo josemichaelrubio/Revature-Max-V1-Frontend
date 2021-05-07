@@ -6,7 +6,7 @@
     class="btn btn-lg btn-outline-dark"
     data-toggle="modal"
     data-target="#exampleModalCenter"
-    (click)="loadTags()"
+    (click)="loadTechs()"
     >Add Topic Event</a
   >
   <a
@@ -62,8 +62,8 @@
                 aria-label="Default select example"
               >
                 <option selected>Choose Tech</option>
-                <option *ngFor="let tag of tagList" value="{{ tag.id }}">
-                  {{ tag.name }}
+                <option *ngFor="let tech of techList" value="{{ tech.id }}">
+                  {{ tech.name }}
                 </option>
               </select>
               <select class="form-select" aria-label="Default select example">
@@ -120,21 +120,49 @@
             <form [formGroup]="formRemoveData">
               <input
                 type="text"
+                hidden
                 class="form-control"
                 id="eventInput"
-                name="topic"
+                name="topicId"
+                value="{{ topicIdClick }}"
+                formControlName="topicId"
+              />
+              <input
+                type="text"
+                class="form-control"
+                id="eventInput"
+                name="topicName"
                 placeholder="{{ topicNameClick }}"
                 value="{{ topicNameClick }}"
                 formControlName="topicName"
               />
+              <input
+                type="text"
+                hidden
+                class="form-control"
+                id="eventInput"
+                name="topicDate"
+                value="{{ topicDateClick }}"
+                formControlName="topicDate"
+              />
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  (click)="removeTopic()"
+                >
+                  Save changes
+                </button>
+              </div>
             </form>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">
-            Close
-          </button>
-          <button type="button" class="btn btn-primary">Save changes</button>
         </div>
       </div>
     </div>
